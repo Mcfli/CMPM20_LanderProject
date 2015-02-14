@@ -6,6 +6,7 @@ function preload(){
 	game.load.image('ship', 'assets/ship_2.png');
 	game.load.image('platform', 'assets/platform.png');
 	game.load.image('planet', 'assets/circle.png');
+	//game.load.audio('jupiter', 'assets/jupiter.WAV');
 }
 
 var lander;
@@ -15,6 +16,9 @@ var gravPoint;
 var cursors;
 
 function create(){
+	//music = game.add.audio('jupiter');
+    //music.play();
+    
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 	game.physics.startSystem(Phaser.Physics.P2JS);
 	
@@ -52,11 +56,20 @@ function create(){
 	
 	planet.body.setCollisionGroup(planetCollisionGroup);
 	platform.body.setCollisionGroup(platformCollisionGroup);
-	lander.body.setCollisionGroup(landerCollisionGroup)
+	lander.body.setCollisionGroup(landerCollisionGroup);
+	
+	planet.body.collides([planetCollisionGroup,landerCollisionGroup]);
+	platform.body.collides([platformCollisionGroup,landerCollisionGroup]);
+	
+	lander.body.collides(platformCollisionGroup,landerHit,this);
+	lander.body.collides(planetCollisionGroup);
+	
 	
 	gravPoint = new Phaser.Point(planet.x, planet.y);
 	
 	cursors = game.input.keyboard.createCursorKeys();
+	
+	lander.onBeginContact.add(landerHit,this);
 }
 
 function update(){
@@ -76,12 +89,15 @@ function update(){
 	accelerateToObject(lander,gravPoint,50);
 }
 
-
 function accelerateToObject(obj1, obj2, speed){
 	if(typeof speed === 'undefined'){speed = 50;}
 	var angle = Math.atan2(obj2.y - obj1.y, obj2.x - obj1.x);
     obj1.body.force.x += Math.cos(angle) * speed;
     obj1.body.force.y += Math.sin(angle) * speed;
+}
+
+function landerHit(body, shapeA, shapeB, equation){
+		lander.body.static = true;
 }
 
 function render(){
