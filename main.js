@@ -6,7 +6,7 @@ function preload(){
 	game.load.image('ship', 'assets/ship_2.png');
 	game.load.image('platform', 'assets/platform.png');
 	game.load.image('planet', 'assets/circle.png');
-	//game.load.audio('jupiter', 'assets/jupiter.WAV');
+	game.load.audio('jupiter', 'assets/jupiter.ogg');
 }
 
 var lander;
@@ -16,8 +16,8 @@ var gravPoint;
 var cursors;
 
 function create(){
-	//music = game.add.audio('jupiter');
-    //music.play();
+	music = game.add.audio('jupiter');
+    music.play();
     
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 	game.physics.startSystem(Phaser.Physics.P2JS);
