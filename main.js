@@ -42,7 +42,7 @@ function create(){
 	lander = game.add.sprite(100,50,'ship');
 	lander.scale.setTo(0.5,0.5);
 	lander.anchor.set(0.5);
-	game.physics.p2.enable(lander,true);
+	game.physics.p2.enable(lander, true);
 	
 	var landerCollisionGroup = game.physics.p2.createCollisionGroup();
 	var planetCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -85,8 +85,5 @@ function accelerateToObject(obj1, obj2, speed){
 }
 
 function render(){
-	game.debug.body(platform);
-	game.debug.body(lander);
-	game.debug.body(planet);
-	game.debug.bodyInfo(lander, 16, 24);
+	game.debug.bodyInfo(lander,32,32);
 }
