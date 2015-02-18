@@ -17,7 +17,10 @@ var cursors;
 
 function create(){
 	music = game.add.audio('jupiter');
-    music.play();
+        music.play();
+    
+        //setting world size (larger than canvas)
+        game.world.setBounds(0, 0, 2000, 2000);    
     
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 	game.physics.startSystem(Phaser.Physics.P2JS);
@@ -63,6 +66,9 @@ function create(){
 	
 	lander.body.collides(platformCollisionGroup,landerHit,this);
 	lander.body.collides(planetCollisionGroup);
+	
+	//sets camera to follow lander sprite
+	game.camera.follow(lander);
 	
 	
 	gravPoint = new Phaser.Point(planet.x, planet.y);
