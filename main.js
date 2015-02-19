@@ -30,7 +30,7 @@ function create(){
 	
 	game.stage.backgroundColor = '#2d2d2d';
 	
-	planet = game.add.sprite(400,300, 'planet');
+	planet = game.add.sprite(1000,1000, 'planet');
 	planet.anchor.set(0.5);
 	var planetW = planet.width;
 	var planetH = planet.height;
@@ -39,7 +39,7 @@ function create(){
 	planet.body.setCircle(80);
 	planet.enableBody = true;
 	
-	platform = game.add.sprite(planet.x,220, 'platform');
+	platform = game.add.sprite(planet.x,planet.y - 75, 'platform');
 	platform.anchor.set(0.5);
 	platform.scale.setTo(0.5);
 	game.physics.p2.enable(platform, true);
