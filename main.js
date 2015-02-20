@@ -15,6 +15,7 @@ var planet;
 var platform;
 var gravPoint;
 var movingBox;
+var tiltBox;
 var cursors;
 
 function create(){
@@ -41,6 +42,9 @@ function create(){
 	planet.body.static = true;
 	planet.body.setCircle(160);
 	planet.enableBody = true;
+	
+	// point where gravity moves toward (center of planet)
+	gravPoint = new Phaser.Point(planet.x, planet.y);
 	
 	platform = game.add.sprite(planet.x,planet.y - 160, 'platform');
 	platform.anchor.set(0.5);
@@ -76,7 +80,16 @@ function create(){
 	movingBox.body.velocity.y = 80;
 	movingBox.body.kinematic = true;
 	game.time.events.loop(Phaser.Timer.SECOND * 2.25, moveBox);
-		
+	
+	tiltBox = game.add.sprite(1300, 750, 'square');
+	tiltBox.anchor.set(0.5);
+	tiltBox.scale.setTo(0.75,0.75);
+	game.physics.p2.enable(tiltBox, true);
+	tiltBox.enableBody = true;
+	velocityTowards(tiltBox,gravPoint,80);
+	tiltBox.body.kinematic = true;
+	game.time.events.loop(Phaser.Timer.SECOND * 2.25, velocityAway);
+
 	// Create collision groups
 	var landerCollisionGroup = game.physics.p2.createCollisionGroup();
 	var planetCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -107,9 +120,6 @@ function create(){
 	
 	//sets camera to follow lander sprite
 	game.camera.follow(lander);
-	
-	// point where gravity moves toward (center of planet)
-	gravPoint = new Phaser.Point(planet.x, planet.y);
 	
 	// Arrow keys
 	cursors = game.input.keyboard.createCursorKeys();
@@ -150,6 +160,19 @@ function landerHit(body, shapeA, shapeB, equation){
 
 function moveBox(){
 	movingBox.body.velocity.y = -movingBox.body.velocity.y;
+}
+
+function velocityAway(){
+	tiltBox.body.velocity.y = -tiltBox.body.velocity.y;
+	tiltBox.body.velocity.x = -tiltBox.body.velocity.x;
+}
+
+function velocityTowards(obj1, obj2, speed){
+	if(typeof speed === 'undefined'){speed = 80;}
+	var angle = Math.atan2(obj2.y - obj1.y, obj2.x - obj1.x);
+	obj1.body.rotation = angle;
+    obj1.body.velocity.x = Math.cos(angle) * speed;
+    obj1.body.velocity.y = Math.sin(angle) * speed;
 }
 
 function render(){
