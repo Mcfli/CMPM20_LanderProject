@@ -79,6 +79,7 @@ function create(){
 	game.physics.p2.enable(movingBox, true);
 	movingBox.enableBody = true;
 	movingBox.body.velocity.y = 80;
+	movingBox.body.kinematic = true;
 	game.time.events.loop(Phaser.Timer.SECOND * 2.25, moveBox);
 		
 	// Create collision groups
