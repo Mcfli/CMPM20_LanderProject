@@ -57,14 +57,9 @@ function create(){
 	
 	// Obstacle wall using array
 	var obstArray = new Array();
-	obstArray.push(game.add.sprite(800, 700, 'square'));
-	obstArray[0].anchor.set(0.5);
-	obstArray[0].scale.setTo(0.75,0.75);
-	game.physics.p2.enable(obstArray[0], true);
-	obstArray[0].body.static = true;
-	obstArray[0].enableBody = true;
-	for(var i = 1; i < 9; i++){
-		obstArray.push(game.add.sprite(obstArray[i - 1].x + 50, obstArray[0].y, 'square'));
+	for(var i = 0; i < 8; i++){
+		if(i == 0) obstArray.push(game.add.sprite(800, 700, 'square'));
+		else obstArray.push(game.add.sprite(obstArray[i - 1].x + 50, obstArray[0].y, 'square'));
 		obstArray[i].anchor.set(0.5);
 		obstArray[i].scale.setTo(0.75,0.75);
 		game.physics.p2.enable(obstArray[i], true);
