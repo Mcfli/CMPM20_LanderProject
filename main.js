@@ -108,11 +108,13 @@ function create(){
 		obstArray[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
 	movingBox.body.setCollisionGroup(obstacleCollisionGroup);
+	tiltBox.body.setCollisionGroup(obstacleCollisionGroup);
 	
 	// Object collisions
 	planet.body.collides([planetCollisionGroup,landerCollisionGroup]);
 	platform.body.collides([platformCollisionGroup,landerCollisionGroup]);
 	movingBox.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	tiltBox.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	
 	lander.body.collides(platformCollisionGroup,landerHit,this);
 	lander.body.collides(obstacleCollisionGroup);
