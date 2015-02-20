@@ -58,7 +58,6 @@ function create(){
 	lander.anchor.set(0.5);
 	game.physics.p2.enable(lander, true);
 	
-	
 	// Obstacle wall using array
 	var obstArray = new Array();
 	for(var i = 0; i < 8; i++){
@@ -72,7 +71,7 @@ function create(){
 	}
 	
 	// Moving box
-	movingBox = game.add.sprite(800, 750, 'square');
+	movingBox = game.add.sprite(800, 780, 'square');
 	movingBox.anchor.set(0.5);
 	movingBox.scale.setTo(0.75,0.75);
 	game.physics.p2.enable(movingBox, true);
