@@ -14,6 +14,7 @@ var lander;
 var planet;
 var platform;
 var gravPoint;
+var movingBox;
 var cursors;
 
 function create(){
@@ -53,38 +54,56 @@ function create(){
 	lander.anchor.set(0.5);
 	game.physics.p2.enable(lander, true);
 	
-	obstacle = game.add.sprite(800, 800, 'square');
-	obstacle.anchor.set(0.5);
-	obstacle.scale.setTo(0.75,0.75);
-	game.physics.p2.enable(obstacle, true);
-	obstacle.body.static = true;
-	obstacle.enableBody = true;
 	
-	obstacleTwo = game.add.sprite(900, 800, 'square');
-	obstacleTwo.anchor.set(0.5);
-	obstacleTwo.scale.setTo(0.75,0.75);
-	game.physics.p2.enable(obstacleTwo, true);
-	obstacleTwo.body.static = true;
-	obstacleTwo.enableBody = true;
+	// Obstacle wall using array
+	var obstArray = new Array();
+	obstArray.push(game.add.sprite(800, 700, 'square'));
+	obstArray[0].anchor.set(0.5);
+	obstArray[0].scale.setTo(0.75,0.75);
+	game.physics.p2.enable(obstArray[0], true);
+	obstArray[0].body.static = true;
+	obstArray[0].enableBody = true;
+	for(var i = 1; i < 9; i++){
+		obstArray.push(game.add.sprite(obstArray[i - 1].x + 50, obstArray[0].y, 'square'));
+		obstArray[i].anchor.set(0.5);
+		obstArray[i].scale.setTo(0.75,0.75);
+		game.physics.p2.enable(obstArray[i], true);
+		obstArray[i].body.static = true;
+		obstArray[i].enableBody = true;
+	}
 	
-	
+	// Moving box
+	movingBox = game.add.sprite(800, 750, 'square');
+	movingBox.anchor.set(0.5);
+	movingBox.scale.setTo(0.75,0.75);
+	game.physics.p2.enable(movingBox, true);
+	movingBox.enableBody = true;
+	movingBox.body.velocity.y = 80;
+	game.time.events.loop(Phaser.Timer.SECOND * 2.25, moveBox);
+		
+	// Create collision groups
 	var landerCollisionGroup = game.physics.p2.createCollisionGroup();
 	var planetCollisionGroup = game.physics.p2.createCollisionGroup();
 	var platformCollisionGroup = game.physics.p2.createCollisionGroup();
 	var obstacleCollisionGroup = game.physics.p2.createCollisionGroup();
 	
+	// Collidie with world bounds
 	game.physics.p2.updateBoundsCollisionGroup();
 	
+	// Assign collision groups
 	planet.body.setCollisionGroup(planetCollisionGroup);
 	platform.body.setCollisionGroup(platformCollisionGroup);
 	lander.body.setCollisionGroup(landerCollisionGroup);
-	obstacle.body.setCollisionGroup(obstacleCollisionGroup);
-	obstacleTwo.body.setCollisionGroup(obstacleCollisionGroup);
+	for(var i = 0; i < obstArray.length; i++){
+		obstArray[i].body.setCollisionGroup(obstacleCollisionGroup);
+		obstArray[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	movingBox.body.setCollisionGroup(obstacleCollisionGroup);
 	
+	// Object collisions
 	planet.body.collides([planetCollisionGroup,landerCollisionGroup]);
 	platform.body.collides([platformCollisionGroup,landerCollisionGroup]);
-	obstacle.body.collides([obstacleCollisionGroup,landerCollisionGroup]);
-	obstacleTwo.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	movingBox.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	
 	lander.body.collides(platformCollisionGroup,landerHit,this);
 	lander.body.collides(obstacleCollisionGroup);
@@ -96,10 +115,12 @@ function create(){
 	// point where gravity moves toward (center of planet)
 	gravPoint = new Phaser.Point(planet.x, planet.y);
 	
+	// Arrow keys
 	cursors = game.input.keyboard.createCursorKeys();
 	
 	// specifies function to call when collision occurs
 	lander.onBeginContact.add(landerHit,this);
+	
 }
 
 function update(){
@@ -129,6 +150,10 @@ function accelerateToObject(obj1, obj2, speed){
 //function called by collision
 function landerHit(body, shapeA, shapeB, equation){
 		lander.body.static = true;
+}
+
+function moveBox(){
+	movingBox.body.velocity.y = -movingBox.body.velocity.y;
 }
 
 function render(){
