@@ -76,9 +76,8 @@ function create(){
 	movingBox.scale.setTo(0.75,0.75);
 	game.physics.p2.enable(movingBox, true);
 	movingBox.enableBody = true;
-	movingBox.body.velocity.y = 80;
+	velocityTowards(movingBox,gravPoint,80);
 	movingBox.body.kinematic = true;
-	game.time.events.loop(Phaser.Timer.SECOND * 2.25, moveBox);
 	
 	tiltBox = game.add.sprite(1300, 750, 'square');
 	tiltBox.anchor.set(0.5);
@@ -87,7 +86,9 @@ function create(){
 	tiltBox.enableBody = true;
 	velocityTowards(tiltBox,gravPoint,80);
 	tiltBox.body.kinematic = true;
-	game.time.events.loop(Phaser.Timer.SECOND * 2.25, velocityAway);
+	
+	// Calls for obstacles moving at the same speed, only need 1 call
+	game.time.events.loop(Phaser.Timer.SECOND * 2.25, flipVel);
 
 	// Create collision groups
 	var landerCollisionGroup = game.physics.p2.createCollisionGroup();
@@ -159,13 +160,16 @@ function landerHit(body, shapeA, shapeB, equation){
 		lander.body.static = true;
 }
 
-function moveBox(){
-	movingBox.body.velocity.y = -movingBox.body.velocity.y;
+// Add every obstacle that needs to move at the same time
+function flipVel(){
+	reverseVel(movingBox);
+	reverseVel(tiltBox);
 }
 
-function velocityAway(){
-	tiltBox.body.velocity.y = -tiltBox.body.velocity.y;
-	tiltBox.body.velocity.x = -tiltBox.body.velocity.x;
+// Called by timer function to reverse object's velocity
+function reverseVel(obj1){
+	obj1.body.velocity.y = -obj1.body.velocity.y;
+	obj1.body.velocity.x = -obj1.body.velocity.x;
 }
 
 function velocityTowards(obj1, obj2, speed){
