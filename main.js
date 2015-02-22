@@ -3,25 +3,27 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'lander', {preload:preload, create:create, update:update, render:render});
 
 function preload(){
-	game.load.image('ship', 'assets/ship_2.png');
+	game.load.image('lander', 'assets/Lander Sprites/Phil1.png');
+	game.load.physics('physicsData', 'assets/PhilScale.json');
 	game.load.image('platform', 'assets/platform.png');
-	game.load.image('planet', 'assets/circle.png');
+	game.load.image('planet', 'assets/mars.png');
 	game.load.image('square', 'assets/square.png');
 	game.load.audio('jupiter', 'assets/jupiter.ogg');
+	game.load.image('space', 'assets/backgroundTest.png');
+	//game.load.audio('thrust', 'assets/thruster.ogg');
+	music = game.add.audio('jupiter');
+    music.play();
 }
 
 var lander;
 var planet;
 var platform;
 var gravPoint;
-var movingBox;
 var tiltBox;
 var cursors;
 
 function create(){
-	music = game.add.audio('jupiter');
-    music.play();
-    
+	
     //setting world size (larger than canvas)
     game.world.setBounds(0, 0, 2000, 2000);    
     
@@ -31,37 +33,42 @@ function create(){
 	game.physics.p2.setImpactEvents(true);
 	game.physics.p2.restitution = 0.8;
 	
-	game.stage.backgroundColor = '#2d2d2d';
+	background = game.add.tileSprite(0,0,2000,2000, "space");
 	
 	planet = game.add.sprite(1000,1000, 'planet');
-	planet.scale.setTo(2);
+	planet.scale.setTo(0.64);
 	planet.anchor.set(0.5);
 	var planetW = planet.width;
 	var planetH = planet.height;
 	game.physics.p2.enable(planet, true);
 	planet.body.static = true;
-	planet.body.setCircle(160);
+	planet.body.setCircle(480);
 	planet.enableBody = true;
 	
 	// point where gravity moves toward (center of planet)
 	gravPoint = new Phaser.Point(planet.x, planet.y);
 	
-	platform = game.add.sprite(planet.x,planet.y - 160, 'platform');
+	platform = game.add.sprite(planet.x + 360,planet.y - 310, 'platform');
 	platform.anchor.set(0.5);
-	platform.scale.setTo(0.5);
+	platform.scale.setTo(0.75);
 	game.physics.p2.enable(platform, true);
 	platform.body.static = true;
 	platform.enableBody = true;
+	platform.body.rotation = Math.atan2(gravPoint.y - platform.y, gravPoint.x - platform.x);
+	console.log(platform.body.angle);
 	
-	lander = game.add.sprite(100,50,'ship');
+	//lander = game.add.sprite(100,50,'lander');
+	lander = game.add.sprite(400, 400, 'lander');
 	lander.scale.setTo(0.5,0.5);
 	lander.anchor.set(0.5);
 	game.physics.p2.enable(lander, true);
-	
+	lander.body.clearShapes();
+	lander.body.loadPolygon('physicsData', 'PhilScale');
+
 	// Obstacle wall using array
 	var obstArray = new Array();
 	for(var i = 0; i < 8; i++){
-		if(i == 0) obstArray.push(game.add.sprite(800, 700, 'square'));
+		if(i == 0) obstArray.push(game.add.sprite(800, 400, 'square'));
 		else obstArray.push(game.add.sprite(obstArray[i - 1].x + 50, obstArray[0].y, 'square'));
 		obstArray[i].anchor.set(0.5);
 		obstArray[i].scale.setTo(0.75,0.75);
@@ -71,15 +78,7 @@ function create(){
 	}
 	
 	// Moving box
-	movingBox = game.add.sprite(800, 780, 'square');
-	movingBox.anchor.set(0.5);
-	movingBox.scale.setTo(0.75,0.75);
-	game.physics.p2.enable(movingBox, true);
-	movingBox.enableBody = true;
-	velocityTowards(movingBox,gravPoint,80);
-	movingBox.body.kinematic = true;
-	
-	tiltBox = game.add.sprite(1300, 750, 'square');
+	tiltBox = game.add.sprite(1300, 400, 'square');
 	tiltBox.anchor.set(0.5);
 	tiltBox.scale.setTo(0.75,0.75);
 	game.physics.p2.enable(tiltBox, true);
@@ -107,14 +106,13 @@ function create(){
 		obstArray[i].body.setCollisionGroup(obstacleCollisionGroup);
 		obstArray[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
-	movingBox.body.setCollisionGroup(obstacleCollisionGroup);
 	tiltBox.body.setCollisionGroup(obstacleCollisionGroup);
 	
 	// Object collisions
 	planet.body.collides([planetCollisionGroup,landerCollisionGroup]);
 	platform.body.collides([platformCollisionGroup,landerCollisionGroup]);
-	movingBox.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	tiltBox.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	
 	
 	lander.body.collides(platformCollisionGroup,landerHit,this);
 	lander.body.collides(obstacleCollisionGroup);
@@ -127,15 +125,17 @@ function create(){
 	cursors = game.input.keyboard.createCursorKeys();
 	
 	// specifies function to call when collision occurs
-	lander.onBeginContact.add(landerHit,this);
-	
+	//lander.body.onBeginContact.add(landerHit,this);
 }
 
 function update(){
+	//thrust = game.add.audio('thrust');
 	if(cursors.up.isDown){
 		lander.body.thrust(100);
+		//thrust.play();
 	}
 	if(cursors.left.isDown){
+		
 		lander.body.rotateLeft(100);
 	}
 	else if(cursors.right.isDown){
@@ -144,7 +144,6 @@ function update(){
 	else{
 		lander.body.setZeroRotation();
 	}
-	
 	accelerateToObject(lander,gravPoint,50);
 }
 
@@ -157,12 +156,15 @@ function accelerateToObject(obj1, obj2, speed){
 
 //function called by collision
 function landerHit(body, shapeA, shapeB, equation){
+	console.log(lander.body.angle);
+	if(lander.body.angle <= platform.body.angle + 100 && lander.body.angle >= platform.body.angle - 100){
 		lander.body.static = true;
+	}
+		
 }
 
-// Add every obstacle that needs to move at the same time
+// Calls reverseVel for every obstacle that needs to move at the same time
 function flipVel(){
-	reverseVel(movingBox);
 	reverseVel(tiltBox);
 }
 
