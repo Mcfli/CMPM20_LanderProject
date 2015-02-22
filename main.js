@@ -11,8 +11,6 @@ function preload(){
 	game.load.audio('jupiter', 'assets/jupiter.ogg');
 	game.load.image('space', 'assets/backgroundTest.png');
 	//game.load.audio('thrust', 'assets/thruster.ogg');
-	music = game.add.audio('jupiter');
-    music.play();
 }
 
 var lander;
@@ -23,7 +21,9 @@ var tiltBox;
 var cursors;
 
 function create(){
-	
+	music = game.add.audio('jupiter');
+    music.play();
+    
     //setting world size (larger than canvas)
     game.world.setBounds(0, 0, 2000, 2000);    
     
@@ -55,7 +55,7 @@ function create(){
 	platform.body.static = true;
 	platform.enableBody = true;
 	platform.body.rotation = Math.atan2(gravPoint.y - platform.y, gravPoint.x - platform.x);
-	console.log(platform.body.angle);
+	//console.log(platform.body.angle);
 	
 	//lander = game.add.sprite(100,50,'lander');
 	lander = game.add.sprite(400, 400, 'lander');
@@ -123,9 +123,6 @@ function create(){
 	
 	// Arrow keys
 	cursors = game.input.keyboard.createCursorKeys();
-	
-	// specifies function to call when collision occurs
-	//lander.body.onBeginContact.add(landerHit,this);
 }
 
 function update(){
@@ -156,10 +153,22 @@ function accelerateToObject(obj1, obj2, speed){
 
 //function called by collision
 function landerHit(body, shapeA, shapeB, equation){
-	console.log(lander.body.angle);
-	if(lander.body.angle <= platform.body.angle + 100 && lander.body.angle >= platform.body.angle - 100){
-		lander.body.static = true;
+	//console.log(lander.body.angle);
+	var v = new Phaser.Point(lander.body.velocity.x, lander.body.velocity.y);
+	var absX = Math.abs(v.x);
+	var absY = Math.abs(v.y);
+	console.log(absX, absY);
+	if(absX >= 18 || absY >= 18){
+		// blow up
+		console.log("blow up");
 	}
+	else{
+		if(lander.body.angle <= platform.body.angle + 100 && lander.body.angle >= platform.body.angle - 100){
+		lander.body.static = true;
+		console.log("SAFE");
+		}
+	}
+	
 		
 }
 
