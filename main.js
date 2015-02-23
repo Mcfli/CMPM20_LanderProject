@@ -118,6 +118,16 @@ function create(){
 	lander.body.collides(obstacleCollisionGroup);
 	lander.body.collides(planetCollisionGroup);
 	
+	//HUD
+        var level = "Prototype Mars";
+        //Created a Sprite with fixedToCamera = true
+        var sprite = game.add.sprite(0,0);
+        sprite.fixedToCamera = true;
+        //addChild of my text at x:0, y:0
+        var levelText = game.add.text(0,0,level.toString());
+        levelText.addColor('#ffff00');
+        sprite.addChild(levelText);
+	
 	//sets camera to follow lander sprite
 	game.camera.follow(lander);
 	
