@@ -23,7 +23,6 @@ preload: function() {
 //var cursors;
 
 create: function() {
-//function create(){
 	//var lander;
 	var planet;
 	var platform;
@@ -128,8 +127,8 @@ create: function() {
 	
 	
 	this.lander.body.collides(platformCollisionGroup,this.landerHit,this);
-	this.lander.body.collides(obstacleCollisionGroup);
-	this.lander.body.collides(planetCollisionGroup);
+	this.lander.body.collides(obstacleCollisionGroup,this.landerCol,this);
+	this.lander.body.collides(planetCollisionGroup,this.landerCol,this);
 	
 	//sets camera to follow lander sprite
 	this.game.camera.follow(this.lander);
@@ -140,7 +139,6 @@ create: function() {
 },
 
 update: function() {
-//function update(){
 	//thrust = this.game.add.audio('thrust');
 	if(this.cursors.up.isDown){
 		this.lander.body.thrust(100);
@@ -160,17 +158,14 @@ update: function() {
 },
 
 accelerateToObject: function(obj1, obj2, speed){
-//function accelerateToObject(obj1, obj2, speed){
 	if(typeof speed === 'undefined'){speed = 50;}
 	var angle = Math.atan2(obj2.y - obj1.y, obj2.x - obj1.x);
     obj1.body.force.x += Math.cos(angle) * speed;
     obj1.body.force.y += Math.sin(angle) * speed;
 },
 
-//function called by collision
+// function called by collision with platform
 landerHit: function(bodyA, bodyB, shapeA, shapeB){
-//function landerHit(body, shapeA, shapeB, equation){
-	//console.log(lander.body.angle);
 	var v = new Phaser.Point(bodyA.velocity.x, bodyA.velocity.y);
 	var absX = Math.abs(v.x);
 	var absY = Math.abs(v.y);
@@ -199,21 +194,25 @@ landerHit: function(bodyA, bodyB, shapeA, shapeB){
 		
 },
 
+// function called when lander hits anything besides the platform
+landerCol: function(bodyA, bodyB, shapeA, shapeB){
+	console.log("blow up");
+	this.music.stop();
+	this.game.state.start('level');
+},
+
 // Calls reverseVel for every obstacle that needs to move at the same time
 flipVel: function(obj1){
-//function flipVel(){
 	this.reverseVel(this.tiltBox);
 },
 
 // Called by timer function to reverse object's velocity
 reverseVel: function(obj1){
-//function reverseVel(obj1){
 	obj1.body.velocity.y = -obj1.body.velocity.y;
 	obj1.body.velocity.x = -obj1.body.velocity.x;
 },
 
 velocityTowards: function(obj1, obj2, speed){
-//function velocityTowards(obj1, obj2, speed){
 	if(typeof speed === 'undefined'){speed = 80;}
 	var angle = Math.atan2(obj2.y - obj1.y, obj2.x - obj1.x);
 	obj1.body.rotation = angle;
@@ -223,7 +222,6 @@ velocityTowards: function(obj1, obj2, speed){
 
 
 render: function() {
-//function render(){
 	this.game.debug.bodyInfo(this.lander,32,32);
 }
 }
