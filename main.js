@@ -15,12 +15,6 @@ preload: function() {
 	//this.game.load.audio('thrust', 'assets/thruster.ogg');
 	this.game.load.audio('jupiter', 'assets/jupiter.ogg');
 },
-//var lander;
-//var planet;
-//var platform;
-//var gravPoint;
-//var tiltBox;
-//var cursors;
 
 create: function() {
 	//var lander;
@@ -86,54 +80,27 @@ create: function() {
 	}
 	
 	// Moving box
-	this.tiltBox = this.game.add.sprite(200, 1400, 'square');
+	this.tiltBox = this.game.add.sprite(100, 1450, 'square');
 	this.tiltBox.anchor.set(0.5);
 	this.tiltBox.scale.setTo(0.75,0.75);
 	this.game.physics.p2.enable(this.tiltBox, true);
 	this.tiltBox.enableBody = true;
-	this.velocityTowards(this.tiltBox,this.gravPoint,80);
+	this.velocityTowards(this.tiltBox,this.gravPoint,100);
 	this.tiltBox.body.kinematic = true;
 	
-	this.tiltBoxTwo = this.game.add.sprite(100,0, 'square');
+	this.tiltBoxTwo = this.game.add.sprite(this.tiltBox.x + 400,this.tiltBox.y - 200, 'square');
 	this.tiltBoxTwo.anchor.set(0.5);
-	//this.tiltBoxTwo.scale.setTo(0.75,0.75);
+	this.tiltBoxTwo.scale.setTo(0.75,0.75);
 	this.game.physics.p2.enable(this.tiltBoxTwo, true);
 	this.tiltBoxTwo.enableBody = true;
-	//this.velocityTowards(this.tiltBoxTwo,this.gravPoint,80);
+	this.velocityTowards(this.tiltBoxTwo,this.gravPoint,100);
 	this.reverseVel(this.tiltBoxTwo);
 	this.tiltBoxTwo.body.kinematic = true;
-	this.tiltBox.addChild(this.tiltBoxTwo);
-	/*
-	this.tiltBoxThree = this.game.add.sprite(this.tiltBox.x,this.tiltBox.y, 'square');
-	this.tiltBoxThree.anchor.set(0.5);
-	this.tiltBoxThree.scale.setTo(0.75,0.75);
-	this.game.physics.p2.enable(this.tiltBoxThree, true);
-	this.tiltBoxThree.enableBody = true;
-	this.tiltBoxThree.body.rotation = this.tiltBox.body.rotation;
-	this.tiltBoxThree.body.kinematic = true;
-	*/
-	/*
-	this.tiltBoxFour = this.game.add.sprite(this.tiltBox.x + 14.14213562,this.tiltBox.y - 14.14213562, 'square');
-	this.tiltBoxFour.anchor.set(0.5);
-	this.tiltBoxFour.scale.setTo(0.75,0.75);
-	this.game.physics.p2.enable(this.tiltBoxFour, true);
-	this.tiltBoxFour.enableBody = true;
-	this.tiltBoxFour.body.rotation = this.tiltBox.body.rotation;
-	this.tiltBoxFour.body.kinematic = true;
-	*/
-	/*
-	this.newBox = this.game.add.sprite(60,0, 'square');
-	this.newBox.anchor.set(0.5);
-	//this.newBox.scale.setTo(0.75,0.75);
-	this.game.physics.p2.enable(this.newBox, true);
-	this.newBox.enableBody = true;
-	//this.newBox.body.rotation = this.tiltBox.body.rotation;
-	this.newBox.body.kinematic = true;
-	this.tiltBoxThree.addChild(this.newBox);
-	*/
+	
 	// Calls for obstacles moving at the same speed, only need 1 call
 	timer = this.game.time.create(false);
-	timer.loop(Phaser.Timer.SECOND * 2.25, this.flipVel,this);
+	//timer.loop(Phaser.Timer.SECOND * 2.25, this.flipVel,this);
+	timer.loop(Phaser.Timer.SECOND * 2.00, this.flipVel,this);
 	timer.start();
 	//this.game.time.events.loop(Phaser.Timer.SECOND * 2.25, callback(this.flipVel,this.tiltBox));
 
@@ -163,9 +130,9 @@ create: function() {
 	this.tiltBox.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	this.tiltBoxTwo.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	
-	//this.lander.body.collides(platformCollisionGroup,this.landerHit,this);
-	//this.lander.body.collides(obstacleCollisionGroup,this.landerCol,this);
-	//this.lander.body.collides(planetCollisionGroup,this.landerCol,this);
+	this.lander.body.collides(platformCollisionGroup,this.landerHit,this);
+	this.lander.body.collides(obstacleCollisionGroup,this.landerCol,this);
+	this.lander.body.collides(planetCollisionGroup,this.landerCol,this);
 	
 	//sets camera to follow lander sprite
 	this.game.camera.follow(this.lander);
@@ -299,6 +266,8 @@ landerCol: function(bodyA, bodyB, shapeA, shapeB){
 flipVel: function(obj1){
 	this.reverseVel(this.tiltBox);
 	this.reverseVel(this.tiltBoxTwo);
+	//this.tiltBoxTwo.body.velocity.x = -this.tiltBox.body.velocity.x;
+	
 },
 
 // Called by timer function to reverse object's velocity
