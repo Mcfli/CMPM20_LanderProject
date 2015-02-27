@@ -30,7 +30,7 @@ create: function() {
 	//var tiltBox;
 	//var cursors;
 	this.music = this.game.add.audio('jupiter');
-    this.music.play();
+    //this.music.play();
 
     //setting world size (larger than canvas)
     this.game.world.setBounds(0, 0, 2000, 2000);    
@@ -94,16 +94,16 @@ create: function() {
 	this.velocityTowards(this.tiltBox,this.gravPoint,80);
 	this.tiltBox.body.kinematic = true;
 	
-	this.tiltBoxTwo = this.game.add.sprite(this.tiltBox.x,this.tiltBox.y, 'square');
+	this.tiltBoxTwo = this.game.add.sprite(100,0, 'square');
 	this.tiltBoxTwo.anchor.set(0.5);
-	this.tiltBoxTwo.scale.setTo(0.75,0.75);
+	//this.tiltBoxTwo.scale.setTo(0.75,0.75);
 	this.game.physics.p2.enable(this.tiltBoxTwo, true);
 	this.tiltBoxTwo.enableBody = true;
-	this.velocityTowards(this.tiltBoxTwo,this.gravPoint,80);
-	this.tiltBoxTwo.body.rotation = this.tiltBox.body.rotation;
+	//this.velocityTowards(this.tiltBoxTwo,this.gravPoint,80);
 	this.reverseVel(this.tiltBoxTwo);
 	this.tiltBoxTwo.body.kinematic = true;
-	
+	this.tiltBox.addChild(this.tiltBoxTwo);
+	/*
 	this.tiltBoxThree = this.game.add.sprite(this.tiltBox.x,this.tiltBox.y, 'square');
 	this.tiltBoxThree.anchor.set(0.5);
 	this.tiltBoxThree.scale.setTo(0.75,0.75);
@@ -111,7 +111,8 @@ create: function() {
 	this.tiltBoxThree.enableBody = true;
 	this.tiltBoxThree.body.rotation = this.tiltBox.body.rotation;
 	this.tiltBoxThree.body.kinematic = true;
-	
+	*/
+	/*
 	this.tiltBoxFour = this.game.add.sprite(this.tiltBox.x + 14.14213562,this.tiltBox.y - 14.14213562, 'square');
 	this.tiltBoxFour.anchor.set(0.5);
 	this.tiltBoxFour.scale.setTo(0.75,0.75);
@@ -119,7 +120,17 @@ create: function() {
 	this.tiltBoxFour.enableBody = true;
 	this.tiltBoxFour.body.rotation = this.tiltBox.body.rotation;
 	this.tiltBoxFour.body.kinematic = true;
-	
+	*/
+	/*
+	this.newBox = this.game.add.sprite(60,0, 'square');
+	this.newBox.anchor.set(0.5);
+	//this.newBox.scale.setTo(0.75,0.75);
+	this.game.physics.p2.enable(this.newBox, true);
+	this.newBox.enableBody = true;
+	//this.newBox.body.rotation = this.tiltBox.body.rotation;
+	this.newBox.body.kinematic = true;
+	this.tiltBoxThree.addChild(this.newBox);
+	*/
 	// Calls for obstacles moving at the same speed, only need 1 call
 	timer = this.game.time.create(false);
 	timer.loop(Phaser.Timer.SECOND * 2.25, this.flipVel,this);
