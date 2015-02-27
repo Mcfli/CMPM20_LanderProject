@@ -173,6 +173,26 @@ create: function() {
 	// Arrow keys
 	this.cursors = this.game.input.keyboard.createCursorKeys();
 	
+	////Functioning Code for HUD, use with Update HUD Functions
+    var level = "Return to Earth";
+	var Veloc = (this.lander.body.velocity.x + this.lander.body.velocity.y)/2;
+    //addChild of my text at x:0, y:0
+    var levelText = this.game.add.text(0,0,level.toString());
+	var VelText = this.game.add.text(0,0,Veloc.toString());
+    
+    // HUD Sprite
+    this.HUDlevel = this.game.add.sprite(500,0);
+    this.HUDvel = this.game.add.sprite(0,50);
+    
+    //Created a Sprite with fixedToCamera = true
+    this.HUDlevel.fixedToCamera = true;
+    levelText.fill = 'green';
+    this.HUDvel.fixedToCamera = true;
+    VelText.fill = 'gold';
+    
+    this.HUDlevel.addChild(levelText);
+	this.HUDvel.addChild(VelText);
+	
 },
 
 update: function() {
@@ -192,6 +212,41 @@ update: function() {
 		this.lander.body.setZeroRotation();
 	}
 	this.accelerateToObject(this.lander,this.gravPoint,50);
+	
+	////Velocity update for HUD
+	//calculating Velocity of Lander
+	var Veloc = "Approach Speed: " + (Math.floor(Math.floor(Math.abs(this.lander.body.velocity.x) 
+		+ Math.abs(this.lander.body.velocity.y)/2)) + " m/s");
+    //stringify Veloc
+    var VelText = this.game.add.text(0,0,Veloc.toString());
+	//clear old sprite
+	this.HUDvel.destroy();
+    //generate new sprite
+    this.HUDvel = this.game.add.sprite(0,0);
+    this.HUDvel.fixedToCamera = true;
+    VelText.fill = 'gold';
+    this.HUDvel.addChild(VelText);
+    
+    //Logic for generating HUD Warning
+    if(Math.floor(Math.floor(Math.abs(this.lander.body.velocity.x) 
+		+ Math.abs(this.lander.body.velocity.y)/2)) > 40 && this.HUDwarn == null){
+			var Warning = "UNSAFE LANDING SPEED";
+			var WarnText = this.game.add.text(0,0,Warning.toString());
+			//this.HUDwarn.destroy();
+			this.HUDwarn = this.game.add.sprite(0,25);
+			this.HUDwarn.fixedToCamera = true;
+			WarnText.fill = 'red';
+			this.HUDwarn.addChild(WarnText);
+	}
+	 
+	//turn off warn	
+	if(Math.floor(Math.floor(Math.abs(this.lander.body.velocity.x) 
+		+ Math.abs(this.lander.body.velocity.y)/2)) < 40 && this.HUDwarn != null){
+			
+			this.HUDwarn.destroy();	
+			this.HUDwarn = null;
+	
+	}
 },
 
 accelerateToObject: function(obj1, obj2, speed){
@@ -208,7 +263,9 @@ landerHit: function(bodyA, bodyB, shapeA, shapeB){
 	var absY = Math.abs(v.y);
 	console.log(absX, absY);
 	// check landing velocity
-	if(absX >= 18 || absY >= 18){
+//	if(absX >= 18 || absY >= 18){
+		
+	if((absX + absY) >= 40){
 		// blow up
 		console.log("blow up");
 		this.music.stop();
