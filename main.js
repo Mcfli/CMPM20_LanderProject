@@ -57,9 +57,8 @@ create: function() {
 	platform.body.static = true;
 	platform.enableBody = true;
 	platform.body.rotation = Math.atan2(this.gravPoint.y - platform.y, this.gravPoint.x - platform.x);
-	//console.log(platform.body.angle);
 	
-	//lander = this.game.add.sprite(100,50,'lander');
+	//this.lander = this.game.add.sprite(100,50,'lander');
 	this.lander = this.game.add.sprite(400, 400, 'lander');
 	this.lander.scale.setTo(0.5,0.5);
 	this.lander.anchor.set(0.5);
@@ -68,6 +67,7 @@ create: function() {
 	this.lander.body.loadPolygon('physicsData', 'PhilScale');
 
 	// Obstacle wall using array
+	// top row
 	var obstArray = new Array();
 	for(var i = 0; i < 8; i++){
 		if(i == 0) obstArray.push(this.game.add.sprite(800, 400, 'square'));
@@ -77,6 +77,27 @@ create: function() {
 		this.game.physics.p2.enable(obstArray[i], true);
 		obstArray[i].body.static = true;
 		obstArray[i].enableBody = true;
+	}
+	var smallWall = new Array();
+	for(var i = 0; i < 2; i++){
+		if(i == 0) smallWall.push(this.game.add.sprite(800, 450, 'square'));
+		else smallWall.push(this.game.add.sprite(smallWall[0].x, smallWall[i - 1].y + 50, 'square'));
+		smallWall[i].anchor.set(0.5);
+		smallWall[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(smallWall[i], true);
+		smallWall[i].body.static = true;
+		smallWall[i].enableBody = true;
+	}
+	
+	var midObstArray = new Array();
+	for(var i = 0; i < 5; i++){
+		if(i == 0) midObstArray.push(this.game.add.sprite(290, 1000, 'square'));
+		else midObstArray.push(this.game.add.sprite(midObstArray[i - 1].x + 50, midObstArray[0].y, 'square'));
+		midObstArray[i].anchor.set(0.5);
+		midObstArray[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(midObstArray[i], true);
+		midObstArray[i].body.static = true;
+		midObstArray[i].enableBody = true;
 	}
 	
 	// Moving box
@@ -120,6 +141,10 @@ create: function() {
 	for(var i = 0; i < obstArray.length; i++){
 		obstArray[i].body.setCollisionGroup(obstacleCollisionGroup);
 		obstArray[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < midObstArray.length; i++){
+		midObstArray[i].body.setCollisionGroup(obstacleCollisionGroup);
+		midObstArray[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
 	this.tiltBox.body.setCollisionGroup(obstacleCollisionGroup);
 	this.tiltBoxTwo.body.setCollisionGroup(obstacleCollisionGroup);
