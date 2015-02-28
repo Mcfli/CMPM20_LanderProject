@@ -24,7 +24,7 @@ create: function() {
 	//var tiltBox;
 	//var cursors;
 	this.music = this.game.add.audio('jupiter');
-    //this.music.play();
+    this.music.play();
 
     //setting world size (larger than canvas)
     this.game.world.setBounds(0, 0, 2000, 2000);    
@@ -88,7 +88,6 @@ create: function() {
 		smallWall[i].body.static = true;
 		smallWall[i].enableBody = true;
 	}
-	
 	var midObstArray = new Array();
 	for(var i = 0; i < 5; i++){
 		if(i == 0) midObstArray.push(this.game.add.sprite(290, 1000, 'square'));
@@ -98,6 +97,57 @@ create: function() {
 		this.game.physics.p2.enable(midObstArray[i], true);
 		midObstArray[i].body.static = true;
 		midObstArray[i].enableBody = true;
+	}
+	var botWall = new Array();
+	for(var i = 0; i < 8; i++){
+		if(i == 0) botWall.push(this.game.add.sprite(planet.x, 1650, 'square'));
+		else botWall.push(this.game.add.sprite(botWall[0].x, botWall[i - 1].y + 50, 'square'));
+		botWall[i].anchor.set(0.5);
+		botWall[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(botWall[i], true);
+		botWall[i].body.static = true;
+		botWall[i].enableBody = true;
+	}
+	var topWall = new Array();
+	for(var i = 0; i < 8; i++){
+		if(i == 0) topWall.push(this.game.add.sprite(1550, 0, 'square'));
+		else topWall.push(this.game.add.sprite(topWall[i - 1].x - 50, topWall[i - 1].y + 50, 'square'));
+		topWall[i].anchor.set(0.5);
+		topWall[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(topWall[i], true);
+		topWall[i].body.static = true;
+		topWall[i].enableBody = true;
+	}
+	var lowerWall = new Array();
+	for(var i = 0; i < 8; i++){
+		if(i == 0) lowerWall.push(this.game.add.sprite(1800, 1493, 'square'));
+		else lowerWall.push(this.game.add.sprite(lowerWall[i - 1].x - 50, lowerWall[i - 1].y - 31, 'square'));
+		lowerWall[i].anchor.set(0.5);
+		lowerWall[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(lowerWall[i], true);
+		lowerWall[i].body.static = true;
+		lowerWall[i].enableBody = true;
+		lowerWall[i].body.rotation = Math.atan2(this.gravPoint.y - lowerWall[i].y, this.gravPoint.x - lowerWall[i].x);
+	}
+	var sideWall = new Array();
+	for(var i = 0; i < 12; i++){
+		if(i == 0) sideWall.push(this.game.add.sprite(1650, 1200, 'square'));
+		else sideWall.push(this.game.add.sprite(sideWall[0].x, sideWall[i - 1].y - 50, 'square'));
+		sideWall[i].anchor.set(0.5);
+		sideWall[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(sideWall[i], true);
+		sideWall[i].body.static = true;
+		sideWall[i].enableBody = true;
+	}
+	var sideTwo = new Array();
+	for(var i = 0; i < 3; i++){
+		if(i == 0) sideTwo.push(this.game.add.sprite(1650, 600, 'square'));
+		else sideTwo.push(this.game.add.sprite(sideTwo[i - 1].x + 50, sideTwo[0].y, 'square'));
+		sideTwo[i].anchor.set(0.5);
+		sideTwo[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(sideTwo[i], true);
+		sideTwo[i].body.static = true;
+		sideTwo[i].enableBody = true;
 	}
 	
 	// Moving box
@@ -142,9 +192,33 @@ create: function() {
 		obstArray[i].body.setCollisionGroup(obstacleCollisionGroup);
 		obstArray[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
+	for(var i = 0; i < smallWall.length; i++){
+		smallWall[i].body.setCollisionGroup(obstacleCollisionGroup);
+		smallWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
 	for(var i = 0; i < midObstArray.length; i++){
 		midObstArray[i].body.setCollisionGroup(obstacleCollisionGroup);
 		midObstArray[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < botWall.length; i++){
+		botWall[i].body.setCollisionGroup(obstacleCollisionGroup);
+		botWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < topWall.length; i++){
+		topWall[i].body.setCollisionGroup(obstacleCollisionGroup);
+		topWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < lowerWall.length; i++){
+		topWall[i].body.setCollisionGroup(obstacleCollisionGroup);
+		topWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < sideWall.length; i++){
+		sideWall[i].body.setCollisionGroup(obstacleCollisionGroup);
+		sideWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < sideTwo.length; i++){
+		sideTwo[i].body.setCollisionGroup(obstacleCollisionGroup);
+		sideTwo[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
 	this.tiltBox.body.setCollisionGroup(obstacleCollisionGroup);
 	this.tiltBoxTwo.body.setCollisionGroup(obstacleCollisionGroup);
@@ -166,7 +240,7 @@ create: function() {
 	this.cursors = this.game.input.keyboard.createCursorKeys();
 	
 	////Functioning Code for HUD, use with Update HUD Functions
-    var level = "Return to Earth";
+    var level = "Mars";
 	var Veloc = (this.lander.body.velocity.x + this.lander.body.velocity.y)/2;
     //addChild of my text at x:0, y:0
     var levelText = this.game.add.text(0,0,level.toString());
@@ -178,7 +252,7 @@ create: function() {
     
     //Created a Sprite with fixedToCamera = true
     this.HUDlevel.fixedToCamera = true;
-    levelText.fill = 'green';
+    levelText.fill = 'red';
     this.HUDvel.fixedToCamera = true;
     VelText.fill = 'gold';
     
