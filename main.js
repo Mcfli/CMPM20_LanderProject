@@ -17,12 +17,8 @@ preload: function() {
 },
 
 create: function() {
-	//var lander;
 	var planet;
 	var platform;
-	//var gravPoint;
-	//var tiltBox;
-	//var cursors;
 	this.music = this.game.add.audio('jupiter');
     this.music.play();
 
