@@ -258,10 +258,8 @@ create: function() {
 },
 
 update: function() {
-	//thrust = this.game.add.audio('thrust');
 	if(this.cursors.up.isDown){
 		this.lander.body.thrust(100);
-		//thrust.play();
 	}
 	if(this.cursors.left.isDown){
 		
