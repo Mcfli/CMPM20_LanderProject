@@ -1,6 +1,5 @@
 // Phaser Lander Test
 // main.js
-// var game = new Phaser.Game(800, 600, Phaser.AUTO, 'lander', {preload:preload, create:create, update:update, render:render});
 var level = function(game) {};
 level.prototype = {
 
@@ -38,7 +37,7 @@ create: function() {
 	planet.anchor.set(0.5);
 	var planetW = planet.width;
 	var planetH = planet.height;
-	this.game.physics.p2.enable(planet, true);
+	this.game.physics.p2.enable(planet);
 	planet.body.static = true;
 	planet.body.setCircle(480);
 	planet.enableBody = true;
@@ -49,7 +48,7 @@ create: function() {
 	platform = this.game.add.sprite(planet.x + 360,planet.y - 310, 'platform');
 	platform.anchor.set(0.5);
 	platform.scale.setTo(0.75);
-	this.game.physics.p2.enable(platform, true);
+	this.game.physics.p2.enable(platform);
 	platform.body.static = true;
 	platform.enableBody = true;
 	platform.body.rotation = Math.atan2(this.gravPoint.y - platform.y, this.gravPoint.x - platform.x);
@@ -58,7 +57,7 @@ create: function() {
 	this.lander = this.game.add.sprite(400, 400, 'lander');
 	this.lander.scale.setTo(0.5,0.5);
 	this.lander.anchor.set(0.5);
-	this.game.physics.p2.enable(this.lander, true);
+	this.game.physics.p2.enable(this.lander);
 	this.lander.body.clearShapes();
 	this.lander.body.loadPolygon('physicsData', 'PhilScale');
 
@@ -70,7 +69,7 @@ create: function() {
 		else obstArray.push(this.game.add.sprite(obstArray[i - 1].x + 50, obstArray[0].y, 'square'));
 		obstArray[i].anchor.set(0.5);
 		obstArray[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(obstArray[i], true);
+		this.game.physics.p2.enable(obstArray[i]);
 		obstArray[i].body.static = true;
 		obstArray[i].enableBody = true;
 	}
@@ -80,7 +79,7 @@ create: function() {
 		else smallWall.push(this.game.add.sprite(smallWall[0].x, smallWall[i - 1].y + 50, 'square'));
 		smallWall[i].anchor.set(0.5);
 		smallWall[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(smallWall[i], true);
+		this.game.physics.p2.enable(smallWall[i]);
 		smallWall[i].body.static = true;
 		smallWall[i].enableBody = true;
 	}
@@ -90,7 +89,7 @@ create: function() {
 		else midObstArray.push(this.game.add.sprite(midObstArray[i - 1].x + 50, midObstArray[0].y, 'square'));
 		midObstArray[i].anchor.set(0.5);
 		midObstArray[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(midObstArray[i], true);
+		this.game.physics.p2.enable(midObstArray[i]);
 		midObstArray[i].body.static = true;
 		midObstArray[i].enableBody = true;
 	}
@@ -100,7 +99,7 @@ create: function() {
 		else botWall.push(this.game.add.sprite(botWall[0].x, botWall[i - 1].y + 50, 'square'));
 		botWall[i].anchor.set(0.5);
 		botWall[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(botWall[i], true);
+		this.game.physics.p2.enable(botWall[i]);
 		botWall[i].body.static = true;
 		botWall[i].enableBody = true;
 	}
@@ -110,7 +109,7 @@ create: function() {
 		else topWall.push(this.game.add.sprite(topWall[i - 1].x - 50, topWall[i - 1].y + 50, 'square'));
 		topWall[i].anchor.set(0.5);
 		topWall[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(topWall[i], true);
+		this.game.physics.p2.enable(topWall[i]);
 		topWall[i].body.static = true;
 		topWall[i].enableBody = true;
 	}
@@ -120,7 +119,7 @@ create: function() {
 		else lowerWall.push(this.game.add.sprite(lowerWall[i - 1].x - 50, lowerWall[i - 1].y - 31, 'square'));
 		lowerWall[i].anchor.set(0.5);
 		lowerWall[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(lowerWall[i], true);
+		this.game.physics.p2.enable(lowerWall[i]);
 		lowerWall[i].body.static = true;
 		lowerWall[i].enableBody = true;
 		lowerWall[i].body.rotation = Math.atan2(this.gravPoint.y - lowerWall[i].y, this.gravPoint.x - lowerWall[i].x);
@@ -131,7 +130,7 @@ create: function() {
 		else sideWall.push(this.game.add.sprite(sideWall[0].x, sideWall[i - 1].y - 50, 'square'));
 		sideWall[i].anchor.set(0.5);
 		sideWall[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(sideWall[i], true);
+		this.game.physics.p2.enable(sideWall[i]);
 		sideWall[i].body.static = true;
 		sideWall[i].enableBody = true;
 	}
@@ -141,7 +140,7 @@ create: function() {
 		else sideTwo.push(this.game.add.sprite(sideTwo[i - 1].x + 50, sideTwo[0].y, 'square'));
 		sideTwo[i].anchor.set(0.5);
 		sideTwo[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(sideTwo[i], true);
+		this.game.physics.p2.enable(sideTwo[i]);
 		sideTwo[i].body.static = true;
 		sideTwo[i].enableBody = true;
 	}
@@ -150,7 +149,7 @@ create: function() {
 	this.tiltBox = this.game.add.sprite(100, 1450, 'square');
 	this.tiltBox.anchor.set(0.5);
 	this.tiltBox.scale.setTo(0.75,0.75);
-	this.game.physics.p2.enable(this.tiltBox, true);
+	this.game.physics.p2.enable(this.tiltBox);
 	this.tiltBox.enableBody = true;
 	this.velocityTowards(this.tiltBox,this.gravPoint,100);
 	this.tiltBox.body.kinematic = true;
@@ -158,7 +157,7 @@ create: function() {
 	this.tiltBoxTwo = this.game.add.sprite(this.tiltBox.x + 400,this.tiltBox.y - 200, 'square');
 	this.tiltBoxTwo.anchor.set(0.5);
 	this.tiltBoxTwo.scale.setTo(0.75,0.75);
-	this.game.physics.p2.enable(this.tiltBoxTwo, true);
+	this.game.physics.p2.enable(this.tiltBoxTwo);
 	this.tiltBoxTwo.enableBody = true;
 	this.velocityTowards(this.tiltBoxTwo,this.gravPoint,100);
 	this.reverseVel(this.tiltBoxTwo);
@@ -336,12 +335,15 @@ landerHit: function(bodyA, bodyB, shapeA, shapeB){
 		if(bodyA.angle <= bodyB.angle + 100 && bodyA.angle >= bodyB.angle - 100){
 			bodyA.static = true;
 			console.log("SAFE");
+			menu = this.game.time.create(false);
+			menu.loop(Phaser.Timer.SECOND * 2.00, this.retMenu, this);
+			menu.start();
 		}
 		else{
 			// blow up
 			console.log("blow up");
 			this.music.stop();
-			this.game.state.start('create');
+			this.game.state.start('level');
 		}
 	}
 	
@@ -359,8 +361,6 @@ landerCol: function(bodyA, bodyB, shapeA, shapeB){
 flipVel: function(obj1){
 	this.reverseVel(this.tiltBox);
 	this.reverseVel(this.tiltBoxTwo);
-	//this.tiltBoxTwo.body.velocity.x = -this.tiltBox.body.velocity.x;
-	
 },
 
 // Called by timer function to reverse object's velocity
@@ -377,6 +377,10 @@ velocityTowards: function(obj1, obj2, speed){
     obj1.body.velocity.y = Math.sin(angle) * speed;
 },
 
+retMenu: function(){
+	this.music.stop();
+	this.game.state.start('mainmenu');
+},
 
 render: function() {
 	this.game.debug.bodyInfo(this.lander,32,32);
