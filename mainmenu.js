@@ -11,6 +11,8 @@ mainmenu.prototype = {
 preload: function() {
 	this.game.load.image('blankButton', 'assets/blankButton.png');
     this.game.load.image('menuBack', 'assets/planet.png');
+    
+    this.game.load.audio('clairdelune', 'assets/clairdelune.ogg');
 	
 },
 create: function() {
@@ -18,14 +20,18 @@ create: function() {
 	this.game.scale.pageAlignHorizontally = true;
 	this.game.scale.pageAlignVertically = true;
 	this.game.scale.refresh();
-
+	
+	this.music = this.game.add.audio('clairdelune');
+	this.music.play();
+	background = this.game.add.tileSprite(0,0,2000,2000, "menuBack");
+	
 	this.game.stage.setBackgroundColor('0x2d2d2d');
 	this.text = this.game.add.text(this.game.world.centerX, 100, "Touchdown Adventures of \n          the Philae Lander");
     this.text.anchor.set(0.5);
     
-    background = this.game.add.tileSprite(0,0,2000,2000, "menuBack");
-    button = this.game.add.button(this.game.world.centerX, 500, 'blankButton', this.actionOnClick, this);
     
+    button = this.game.add.button(this.game.world.centerX, 500, 'blankButton', this.actionOnClick, this);
+    button.anchor.set(0.5);
     
     
     this.text.font = 'BANGERS';
@@ -34,12 +40,16 @@ create: function() {
     this.text.fill = 'gold';
     this.text.setShadow(0, 0, 'rgba(0, 0, 0, 0.4)', 0);	
 
-	titletext = 'Orbitron';
-	titletext = this.game.add.text(this.game.world.centerX, 500, 'New Game \n Load Game \n Options');
-	titletext.anchor.set(0.5);
-	titletext.align = 'center';
-	titletext.fontSize = 20;
-	titletext.fill = 'white';
+	this.titletext = 'Orbitron';
+	this.titletext = this.game.add.text(this.game.world.centerX, 500, 'New Game');
+	this.titletext.anchor.set(0.5);
+	this.titletext.align = 'center';
+	this.titletext.fontSize = 20;
+	this.titletext.fill = 'white';
+	
+	button.onInputOver.add(this.over, this);
+    button.onInputOut.add(this.out, this);
+	
 },
 
 
@@ -63,7 +73,16 @@ moveToXY: function(displayObject, x, y, speed) {
 },
 
 actionOnClick: function(){
-	game.state.start("level");
+	this.music.stop();
+	this.game.state.start("level");
 
+},
+
+over: function() {
+    this.titletext.fill = 'gold';
+},
+
+out: function() {
+    this.titletext.fill = 'white';
 }
 }
