@@ -204,8 +204,8 @@ create: function() {
 		topWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
 	for(var i = 0; i < lowerWall.length; i++){
-		topWall[i].body.setCollisionGroup(obstacleCollisionGroup);
-		topWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+		lowerWall[i].body.setCollisionGroup(obstacleCollisionGroup);
+		lowerWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
 	for(var i = 0; i < sideWall.length; i++){
 		sideWall[i].body.setCollisionGroup(obstacleCollisionGroup);
