@@ -1,6 +1,6 @@
-# CMPM20_LanderProject
+# Touchdown Adventures of the Philae Lander
 Group project for CMPM20
 
 
-Website
+# Website
 http://mcfli.github.io/CMPM20_LanderProject
