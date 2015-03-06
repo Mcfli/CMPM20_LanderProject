@@ -217,9 +217,10 @@ comet.prototype = {
 		if((absX + absY) >= 40){
 			// blow up
 			console.log("blow up");
-			restart = this.game.time.create(false);
-			restart.loop(Phaser.Timer.SECOND * 2.00, this.restartLevel, this);
-			restart.start();
+			this.restartLevel();
+			//restart = this.game.time.create(false);
+			//restart.loop(Phaser.Timer.SECOND * 2.00, this.restartLevel, this);
+			//restart.start();
 
 		}
 		else{
@@ -234,9 +235,10 @@ comet.prototype = {
 			else{
 				// blow up
 				console.log("blow up");
-				restart = this.game.time.create(false);
-				restart.loop(Phaser.Timer.SECOND * 2.00, this.restartLevel, this);
-				restart.start();
+				this.restartLevel();
+				//restart = this.game.time.create(false);
+				//restart.loop(Phaser.Timer.SECOND * 2.00, this.restartLevel, this);
+				//restart.start();
 			}
 		}
 	
@@ -246,9 +248,10 @@ comet.prototype = {
 	// function called when lander hits anything besides the platform
 	landerCol: function(bodyA, bodyB, shapeA, shapeB){
 		console.log("blow up");
-		restart = this.game.time.create(false);
-		restart.loop(Phaser.Timer.SECOND * 2.00, this.restartLevel, this);
-		restart.start();
+		this.restartLevel();
+		//restart = this.game.time.create(false);
+		//restart.loop(Phaser.Timer.SECOND * 2.00, this.restartLevel, this);
+		//restart.start();
 
 	},
 
