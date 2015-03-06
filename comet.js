@@ -3,6 +3,7 @@ var comet = function(game) {};
 comet.prototype = {
 	preload: function() {
 		this.game.load.image('lander', 'assets/Lander Sprites/Phil1.png');
+		this.game.load.image('lander', 'assets/Lander Sprites/Phil1.png');
 		this.game.load.physics('physicsData', 'assets/PhilScale.json');
 		this.game.load.image('platform', 'assets/platform.png');
 		this.game.load.image('planet', 'assets/comet.png');
@@ -151,6 +152,10 @@ comet.prototype = {
 	update: function(){
 		if(this.cursors.up.isDown){
 			this.lander.body.thrust(100);
+			this.lander.loadTexture('landerthrust');
+		}
+		else if(this.cursors.up.isUp){
+			this.lander.loadTexture('lander');
 		}
 		if(this.cursors.left.isDown){	
 			this.lander.body.rotateLeft(100);
