@@ -255,8 +255,13 @@ create: function() {
 },
 
 update: function() {
+	//added flames to thrust
 	if(this.cursors.up.isDown){
 		this.lander.body.thrust(100);
+		this.lander.loadTexture('landerthrust');
+	}
+	else if(this.cursors.up.isUp){
+		this.lander.loadTexture('lander');
 	}
 	if(this.cursors.left.isDown){
 		
