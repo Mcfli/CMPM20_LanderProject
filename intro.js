@@ -122,7 +122,7 @@ intro.prototype = {
 	},
 	nextLevel : function(){
 		this.music.stop();
-		this.game.state.start('mars');
+		this.game.state.start('comet');
 		
 	}
 	

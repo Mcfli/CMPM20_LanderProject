@@ -262,7 +262,7 @@ comet.prototype = {
 
 	retMenu: function(){
 		this.music.stop();
-		this.game.state.start('mainmenu');
+		this.game.state.start('mars');
 	},
 	
 	restartLevel: function() {
