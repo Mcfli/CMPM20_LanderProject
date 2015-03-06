@@ -10,6 +10,7 @@ comet.prototype = {
 		this.game.load.image('ast1', 'assets/ast1.png');
 		this.game.load.image('ast2', 'assets/ast2.png');
 		this.game.load.audio('song', 'assets/clairdelune.ogg');
+		this.game.load.atlasJSONHash('explosion', 'assets/explosion.png', 'assets/explosion.json');
 	},
 	create: function () {
 		var planet;
@@ -55,7 +56,6 @@ comet.prototype = {
 		this.game.physics.p2.enable(this.lander);
 		this.lander.body.clearShapes();
 		this.lander.body.loadPolygon('physicsData', 'PhilScale');
-		
 		var midObstArray = new Array();
 		for(var i = 0; i < 12; i++){
 			if(i == 0) midObstArray.push(this.game.add.sprite(0, 800, 'ast2'));
@@ -217,8 +217,10 @@ comet.prototype = {
 		if((absX + absY) >= 40){
 			// blow up
 			console.log("blow up");
-			this.music.stop();
-			this.game.state.start('comet');
+			restart = this.game.time.create(false);
+			restart.loop(Phaser.Timer.SECOND * 2.00, this.restartLevel, this);
+			restart.start();
+
 		}
 		else{
 			// check landing angle
@@ -232,8 +234,9 @@ comet.prototype = {
 			else{
 				// blow up
 				console.log("blow up");
-				this.music.stop();
-				this.game.state.start('comet');
+				restart = this.game.time.create(false);
+				restart.loop(Phaser.Timer.SECOND * 2.00, this.restartLevel, this);
+				restart.start();
 			}
 		}
 	
@@ -243,8 +246,10 @@ comet.prototype = {
 	// function called when lander hits anything besides the platform
 	landerCol: function(bodyA, bodyB, shapeA, shapeB){
 		console.log("blow up");
-		this.music.stop();
-		this.game.state.start('comet');
+		restart = this.game.time.create(false);
+		restart.loop(Phaser.Timer.SECOND * 2.00, this.restartLevel, this);
+		restart.start();
+
 	},
 
 	velocityTowards: function(obj1, obj2, speed){
@@ -258,6 +263,11 @@ comet.prototype = {
 	retMenu: function(){
 		this.music.stop();
 		this.game.state.start('mainmenu');
+	},
+	
+	restartLevel: function() {
+		this.music.stop();
+		this.game.state.start('comet');
 	},
 
 	render: function() {
