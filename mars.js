@@ -11,14 +11,15 @@ preload: function() {
 	this.game.load.image('planet', 'assets/mars.png');
 	this.game.load.image('square', 'assets/square.png');
 	this.game.load.image('space', 'assets/backgroundTest.png');
-	//this.game.load.audio('thrust', 'assets/thruster.ogg');
-	this.game.load.audio('jupiter', 'assets/jupiter.ogg');
+	this.game.load.audio('marsSong', 'assets/mars.ogg');
+	this.game.load.image('ast1', 'assets/ast1.png');
+	this.game.load.image('ast2', 'assets/ast2.png');
 },
 
 create: function() {
 	var planet;
 	var platform;
-	this.music = this.game.add.audio('jupiter');
+	this.music = this.game.add.audio('marsSong');
     this.music.play();
 
     //setting world size (larger than canvas)
@@ -53,7 +54,6 @@ create: function() {
 	platform.enableBody = true;
 	platform.body.rotation = Math.atan2(this.gravPoint.y - platform.y, this.gravPoint.x - platform.x);
 	
-	//this.lander = this.game.add.sprite(100,50,'lander');
 	this.lander = this.game.add.sprite(400, 400, 'lander');
 	this.lander.scale.setTo(0.5,0.5);
 	this.lander.anchor.set(0.5);
@@ -65,8 +65,8 @@ create: function() {
 	// top row
 	var obstArray = new Array();
 	for(var i = 0; i < 8; i++){
-		if(i == 0) obstArray.push(this.game.add.sprite(800, 400, 'square'));
-		else obstArray.push(this.game.add.sprite(obstArray[i - 1].x + 50, obstArray[0].y, 'square'));
+		if(i == 0) obstArray.push(this.game.add.sprite(800, 400, 'ast1'));
+		else obstArray.push(this.game.add.sprite(obstArray[i - 1].x + 50, obstArray[0].y, 'ast1'));
 		obstArray[i].anchor.set(0.5);
 		obstArray[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(obstArray[i]);
@@ -75,8 +75,8 @@ create: function() {
 	}
 	var smallWall = new Array();
 	for(var i = 0; i < 2; i++){
-		if(i == 0) smallWall.push(this.game.add.sprite(800, 450, 'square'));
-		else smallWall.push(this.game.add.sprite(smallWall[0].x, smallWall[i - 1].y + 50, 'square'));
+		if(i == 0) smallWall.push(this.game.add.sprite(800, 450, 'ast1'));
+		else smallWall.push(this.game.add.sprite(smallWall[0].x, smallWall[i - 1].y + 50, 'ast1'));
 		smallWall[i].anchor.set(0.5);
 		smallWall[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(smallWall[i]);
@@ -85,8 +85,8 @@ create: function() {
 	}
 	var midObstArray = new Array();
 	for(var i = 0; i < 5; i++){
-		if(i == 0) midObstArray.push(this.game.add.sprite(290, 1000, 'square'));
-		else midObstArray.push(this.game.add.sprite(midObstArray[i - 1].x + 50, midObstArray[0].y, 'square'));
+		if(i == 0) midObstArray.push(this.game.add.sprite(290, 1000, 'ast2'));
+		else midObstArray.push(this.game.add.sprite(midObstArray[i - 1].x + 50, midObstArray[0].y, 'ast2'));
 		midObstArray[i].anchor.set(0.5);
 		midObstArray[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(midObstArray[i]);
@@ -95,8 +95,8 @@ create: function() {
 	}
 	var botWall = new Array();
 	for(var i = 0; i < 8; i++){
-		if(i == 0) botWall.push(this.game.add.sprite(planet.x, 1650, 'square'));
-		else botWall.push(this.game.add.sprite(botWall[0].x, botWall[i - 1].y + 50, 'square'));
+		if(i == 0) botWall.push(this.game.add.sprite(planet.x, 1650, 'ast1'));
+		else botWall.push(this.game.add.sprite(botWall[0].x, botWall[i - 1].y + 50, 'ast1'));
 		botWall[i].anchor.set(0.5);
 		botWall[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(botWall[i]);
@@ -105,8 +105,8 @@ create: function() {
 	}
 	var topWall = new Array();
 	for(var i = 0; i < 8; i++){
-		if(i == 0) topWall.push(this.game.add.sprite(1550, 0, 'square'));
-		else topWall.push(this.game.add.sprite(topWall[i - 1].x - 50, topWall[i - 1].y + 50, 'square'));
+		if(i == 0) topWall.push(this.game.add.sprite(1550, 0, 'ast2'));
+		else topWall.push(this.game.add.sprite(topWall[i - 1].x - 50, topWall[i - 1].y + 50, 'ast2'));
 		topWall[i].anchor.set(0.5);
 		topWall[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(topWall[i]);
@@ -115,8 +115,8 @@ create: function() {
 	}
 	var lowerWall = new Array();
 	for(var i = 0; i < 8; i++){
-		if(i == 0) lowerWall.push(this.game.add.sprite(1800, 1493, 'square'));
-		else lowerWall.push(this.game.add.sprite(lowerWall[i - 1].x - 50, lowerWall[i - 1].y - 31, 'square'));
+		if(i == 0) lowerWall.push(this.game.add.sprite(1800, 1493, 'ast1'));
+		else lowerWall.push(this.game.add.sprite(lowerWall[i - 1].x - 50, lowerWall[i - 1].y - 31, 'ast1'));
 		lowerWall[i].anchor.set(0.5);
 		lowerWall[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(lowerWall[i]);
@@ -126,8 +126,8 @@ create: function() {
 	}
 	var sideWall = new Array();
 	for(var i = 0; i < 12; i++){
-		if(i == 0) sideWall.push(this.game.add.sprite(1650, 1200, 'square'));
-		else sideWall.push(this.game.add.sprite(sideWall[0].x, sideWall[i - 1].y - 50, 'square'));
+		if(i == 0) sideWall.push(this.game.add.sprite(1650, 1200, 'ast2'));
+		else sideWall.push(this.game.add.sprite(sideWall[0].x, sideWall[i - 1].y - 50, 'ast2'));
 		sideWall[i].anchor.set(0.5);
 		sideWall[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(sideWall[i]);
@@ -136,8 +136,8 @@ create: function() {
 	}
 	var sideTwo = new Array();
 	for(var i = 0; i < 3; i++){
-		if(i == 0) sideTwo.push(this.game.add.sprite(1650, 600, 'square'));
-		else sideTwo.push(this.game.add.sprite(sideTwo[i - 1].x + 50, sideTwo[0].y, 'square'));
+		if(i == 0) sideTwo.push(this.game.add.sprite(1650, 600, 'ast1'));
+		else sideTwo.push(this.game.add.sprite(sideTwo[i - 1].x + 50, sideTwo[0].y, 'ast1'));
 		sideTwo[i].anchor.set(0.5);
 		sideTwo[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(sideTwo[i]);
@@ -146,7 +146,7 @@ create: function() {
 	}
 	
 	// Moving box
-	this.tiltBox = this.game.add.sprite(100, 1450, 'square');
+	this.tiltBox = this.game.add.sprite(100, 1450, 'ast2');
 	this.tiltBox.anchor.set(0.5);
 	this.tiltBox.scale.setTo(0.75,0.75);
 	this.game.physics.p2.enable(this.tiltBox);
@@ -154,7 +154,7 @@ create: function() {
 	this.velocityTowards(this.tiltBox,this.gravPoint,100);
 	this.tiltBox.body.kinematic = true;
 	
-	this.tiltBoxTwo = this.game.add.sprite(this.tiltBox.x + 400,this.tiltBox.y - 200, 'square');
+	this.tiltBoxTwo = this.game.add.sprite(this.tiltBox.x + 400,this.tiltBox.y - 200, 'ast2');
 	this.tiltBoxTwo.anchor.set(0.5);
 	this.tiltBoxTwo.scale.setTo(0.75,0.75);
 	this.game.physics.p2.enable(this.tiltBoxTwo);
