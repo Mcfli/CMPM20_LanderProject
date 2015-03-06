@@ -48,16 +48,23 @@ intro.prototype = {
 		this.content = [
     		" ",
    			"There was a time once",
-   			"when humanity would look to the stars",
-    		"in hope to touch upon the far ends of the universe ",
-    		"Kern of Duty",
-    		" ",
-   			"directed by rich davey",
-   			"rendering by mat groves",
-   			"    ",
-    		"03:45, November 4th, 2014",
-   			 "somewhere in the north pacific",
-    		"mission control bravo ...",
+			"where humanity would look\n to the stars",
+			"and dared to walk amongst\n the heavens.",
+    		"",
+    		"",
+   			"With ingenuity and promise",
+			"humanity extended its reach",
+			"to other celestial objects.",
+   			"  ",
+   			"And humanity knew",
+			"that when it landed",
+			"when it set down on an\n alien surface",
+			"it meant something.",
+			" ",
+    		"Something that was lost\n to humanity",
+			"when its people dashed\n their hopes and future",
+			"forgotten, only a yearning\n for days long past",
+			"until one fateful day\n in 2014...",
 		];
 
 		this.index = 0;
@@ -66,7 +73,7 @@ intro.prototype = {
 		this.text = this.game.add.text(32, 380, '', { font: "40pt Jura", fill: 'white', stroke: 'black', strokeThickness: 2});
 		
 		timer = this.game.time.create(false);
-		timer.loop(Phaser.Timer.SECOND * 5.00, this.nextImage,this);
+		timer.loop(Phaser.Timer.SECOND * 25.00, this.nextImage,this);
 		timer.start();
 		
     	this.nextLine();
@@ -85,7 +92,7 @@ intro.prototype = {
     	else
     	{
        		//  Wait 2 seconds then start a new line
-        	this.game.time.events.add(Phaser.Timer.SECOND * 2, this.nextLine, this);
+        	this.game.time.events.add(Phaser.Timer.SECOND * 4, this.nextLine, this);
     	}
 
 	},
@@ -108,10 +115,15 @@ intro.prototype = {
 			this.iterator++;
 		}
 		else {
-			this.music.stop();
-			this.game.state.start('mars');
+			this.game.time.events.add(Phaser.Timer.SECOND * 6, this.nextLevel, this);
+			
 		}
 		
+	},
+	nextLevel : function(){
+		this.music.stop();
+		this.game.state.start('mars');
 		
 	}
+	
 }
