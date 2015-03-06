@@ -6,7 +6,7 @@
         <script src="phaser.js"></script>
     </head>
     <body>
-
+	<script type="text/javascript" src="intro.js"></script>
     <script type="text/javascript" src="mars.js"></script>
     <script type="text/javascript" src="mainmenu.js"></script>
     <script type="text/javascript">
@@ -26,6 +26,7 @@
     <script>
 		(function() {
 				var game = new Phaser.Game(800, 600, Phaser.AUTO, "game");
+				game.state.add("intro",intro);
 				game.state.add("mars",mars);
 				game.state.add("mainmenu",mainmenu);
 				game.state.start("mainmenu");

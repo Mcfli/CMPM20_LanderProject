@@ -6,8 +6,7 @@ var mainmenu = function(game){};
 mainmenu.prototype = {
 	
 
-//var text = null;
-//var titletext = null;
+
 preload: function() {
 	this.game.load.image('blankButton', 'assets/blankButton.png');
     this.game.load.image('menuBack', 'assets/planet.png');
@@ -30,7 +29,7 @@ create: function() {
     this.text.anchor.set(0.5);
     
     
-    button = this.game.add.button(this.game.world.centerX, 500, 'blankButton', this.actionOnClick, this);
+    button = this.game.add.button(this.game.world.centerX, 500, 'blankButton', this.startnewgame, this);
     button.anchor.set(0.5);
     
     
@@ -72,10 +71,9 @@ moveToXY: function(displayObject, x, y, speed) {
     return { x: x, y: y };
 },
 
-actionOnClick: function(){
+startnewgame: function(){
 	this.music.stop();
 	this.game.state.start("mars");
-
 },
 
 over: function() {
