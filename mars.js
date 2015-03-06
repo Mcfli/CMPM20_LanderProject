@@ -1,10 +1,8 @@
-// Phaser Lander Test
 // mars.js
 var mars = function(game) {};
 mars.prototype = {
 
 preload: function() {
-//function preload(){
 	this.game.load.image('lander', 'assets/Lander Sprites/Phil1.png');
 	this.game.load.physics('physicsData', 'assets/PhilScale.json');
 	this.game.load.image('platform', 'assets/platform.png');

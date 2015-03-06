@@ -9,6 +9,7 @@
 
     <script type="text/javascript" src="mars.js"></script>
     <script type="text/javascript" src="mainmenu.js"></script>
+    <script type="text/javascript" src="comet.js"></script>
     <script type="text/javascript">
 	WebFontConfig = {
 		google: { families: [ 'BANGERS','Orbitron' ] }
@@ -28,7 +29,8 @@
 				var game = new Phaser.Game(800, 600, Phaser.AUTO, "game");
 				game.state.add("mars",mars);
 				game.state.add("mainmenu",mainmenu);
-				game.state.start("mainmenu");
+				game.state.add("comet", comet);
+				game.state.start("comet");
 			})();
 	</script>
     </body>
