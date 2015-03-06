@@ -1,7 +1,7 @@
 // Phaser Lander Test
-// main.js
-var level = function(game) {};
-level.prototype = {
+// mars.js
+var mars = function(game) {};
+mars.prototype = {
 
 preload: function() {
 //function preload(){
@@ -328,7 +328,7 @@ landerHit: function(bodyA, bodyB, shapeA, shapeB){
 		// blow up
 		console.log("blow up");
 		this.music.stop();
-		this.game.state.start('level');
+		this.game.state.start('mars');
 	}
 	else{
 		// check landing angle
@@ -343,7 +343,7 @@ landerHit: function(bodyA, bodyB, shapeA, shapeB){
 			// blow up
 			console.log("blow up");
 			this.music.stop();
-			this.game.state.start('level');
+			this.game.state.start('mars');
 		}
 	}
 	
@@ -354,7 +354,7 @@ landerHit: function(bodyA, bodyB, shapeA, shapeB){
 landerCol: function(bodyA, bodyB, shapeA, shapeB){
 	console.log("blow up");
 	this.music.stop();
-	this.game.state.start('level');
+	this.game.state.start('mars');
 },
 
 // Calls reverseVel for every obstacle that needs to move at the same time

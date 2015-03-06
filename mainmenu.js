@@ -74,7 +74,7 @@ moveToXY: function(displayObject, x, y, speed) {
 
 actionOnClick: function(){
 	this.music.stop();
-	this.game.state.start("level");
+	this.game.state.start("mars");
 
 },
 
