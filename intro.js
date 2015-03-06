@@ -5,7 +5,9 @@
 var intro = function(game){};
 intro.prototype = {
 	
+	
 	preload: function(){
+		
 		this.game.load.image('oldRocket', 'assets/CutsceneArt/oldRocket.png');
 		this.game.load.image('bootprint', 'assets/CutsceneArt/bootprint.png');
 		this.game.load.image('earthrise', 'assets/CutsceneArt/earthrise.png');
@@ -31,12 +33,23 @@ intro.prototype = {
 		this.cutsceneArray.push('rocketlaunch');
 		this.iterator = 1;
 		
-		
+		PIXI.Text.prototype.determineFontProperties = function(fontStyle) {
+			var properties = PIXI.Text.fontPropertiesCache[fontStyle];
+			if(properties) {
+				return properties; 
+				}
+				properties = {ascent: 40, descent: 10, fontSize: 60
+	};
+
+	PIXI.Text.fontPropertiesCache[fontStyle] = properties;
+	return properties;
+};
+
 		this.content = [
     		" ",
-   			"photon storm presents",
-   			"a phaser production",
-    		" ",
+   			"There was a time once",
+   			"when humanity would look to the stars",
+    		"in hope to touch upon the far ends of the universe ",
     		"Kern of Duty",
     		" ",
    			"directed by rich davey",
@@ -50,10 +63,10 @@ intro.prototype = {
 		this.index = 0;
 		this.line = '';
 		
-		this.text = this.game.add.text(32, 380, '', { font: "30pt Courier", fill: "#19cb65", stroke: "#119f4e", strokeThickness: 2 });
+		this.text = this.game.add.text(32, 380, '', { font: "40pt Jura", fill: 'white', stroke: 'black', strokeThickness: 2});
 		
 		timer = this.game.time.create(false);
-		timer.loop(Phaser.Timer.SECOND * 2.00, this.nextImage,this);
+		timer.loop(Phaser.Timer.SECOND * 5.00, this.nextImage,this);
 		timer.start();
 		
     	this.nextLine();

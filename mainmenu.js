@@ -54,7 +54,7 @@ create: function() {
 
 update: function(){
 	var offset = this.moveToXY(this.game.input.activePointer, this.text.x, this.text.y, 8);
-    this.text.setShadow(offset.x, offset.y, 'rgba(0, 0, 0, 0.5)', this.distanceToPointer(this.text, this.game.input.activePointer) / 30);
+    this.text.setShadow(offset.x, offset.y, 'rgba(255, 255, 255, 0.3)', this.distanceToPointer(this.text, this.game.input.activePointer) / 30);
 },
 
 
@@ -73,7 +73,7 @@ moveToXY: function(displayObject, x, y, speed) {
 
 startnewgame: function(){
 	this.music.stop();
-	this.game.state.start("mars");
+	this.game.state.start("intro");
 },
 
 over: function() {
