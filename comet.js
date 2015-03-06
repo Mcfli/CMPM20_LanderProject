@@ -2,7 +2,7 @@
 var comet = function(game) {};
 comet.prototype = {
 	preload: function() {
-		this.game.load.image('landerthurst', 'assets/Lander Sprites/Phil1thrust.png');
+		this.game.load.image('landerthrust', 'assets/Lander Sprites/Phil1thrust.png');
 		this.game.load.image('lander', 'assets/Lander Sprites/Phil1.png');
 		this.game.load.physics('physicsData', 'assets/PhilScale.json');
 		this.game.load.image('platform', 'assets/platform.png');
