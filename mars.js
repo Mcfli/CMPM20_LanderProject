@@ -346,6 +346,12 @@ landerHit: function(bodyA, bodyB, shapeA, shapeB){
 		if(bodyA.angle <= bodyB.angle + 100 && bodyA.angle >= bodyB.angle - 100){
 			bodyA.static = true;
 			console.log("SAFE");
+			var complete = "Level Complete!";
+			var completeText = this.game.add.text(0,0,complete.toString());
+			completeText.fill = 'green';
+			this.completeLevel = this.game.add.sprite(300,100);
+			this.completeLevel.fixedToCamera = true;
+			this.completeLevel.addChild(completeText);
 			menu = this.game.time.create(false);
 			menu.loop(Phaser.Timer.SECOND * 2.00, this.retMenu, this);
 			menu.start();
