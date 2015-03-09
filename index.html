@@ -6,20 +6,20 @@
         <script src="phaser.js"></script>
     </head>
     <body>
-
+	<script type="text/javascript" src="intro.js"></script>
     <script type="text/javascript" src="mars.js"></script>
     <script type="text/javascript" src="mainmenu.js"></script>
     <script type="text/javascript" src="comet.js"></script>
     <script type="text/javascript">
 	WebFontConfig = {
-		google: { families: [ 'BANGERS','Orbitron' ] }
+		google: { families: [ 'BANGERS','Orbitron', 'Jura'] }
 	};
 	(function() {
 		var wf = document.createElement('script');
 		wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
 			'://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
 		wf.type = 'text/javascript';
-		wf.async = 'true';
+		wf.async = 'true';	
 		var s = document.getElementsByTagName('script')[0];
 		s.parentNode.insertBefore(wf, s);
 	})();
@@ -27,6 +27,7 @@
     <script>
 		(function() {
 				var game = new Phaser.Game(800, 600, Phaser.AUTO, "game");
+				game.state.add("intro",intro);
 				game.state.add("mars",mars);
 				game.state.add("mainmenu",mainmenu);
 				game.state.add("comet", comet);

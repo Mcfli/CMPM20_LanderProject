@@ -2,6 +2,7 @@
 var comet = function(game) {};
 comet.prototype = {
 	preload: function() {
+		this.game.load.image('landerthrust', 'assets/Lander Sprites/Phil1thrust.png');
 		this.game.load.image('lander', 'assets/Lander Sprites/Phil1.png');
 		this.game.load.physics('physicsData', 'assets/PhilScale.json');
 		this.game.load.image('platform', 'assets/platform.png');
@@ -10,7 +11,7 @@ comet.prototype = {
 		this.game.load.image('ast1', 'assets/ast1.png');
 		this.game.load.image('ast2', 'assets/ast2.png');
 		this.game.load.audio('song', 'assets/clairdelune.ogg');
-		this.game.load.atlasJSONHash('explosion', 'assets/explosion.png', 'assets/explosion.json');
+		this.game.load.spritesheet('expl', 'assets/expl.png', 192, 192, 64);
 	},
 	create: function () {
 		var planet;
@@ -56,6 +57,7 @@ comet.prototype = {
 		this.game.physics.p2.enable(this.lander);
 		this.lander.body.clearShapes();
 		this.lander.body.loadPolygon('physicsData', 'PhilScale');
+		this.isNotDead = true;
 		var midObstArray = new Array();
 		for(var i = 0; i < 12; i++){
 			if(i == 0) midObstArray.push(this.game.add.sprite(0, 800, 'ast2'));
@@ -149,8 +151,12 @@ comet.prototype = {
 	},
 	
 	update: function(){
-		if(this.cursors.up.isDown){
+		if(this.cursors.up.isDown && this.isNotDead){
 			this.lander.body.thrust(100);
+			this.lander.loadTexture('landerthrust');
+		}
+		else if(this.cursors.up.isUp  && this.isNotDead){
+			this.lander.loadTexture('lander');
 		}
 		if(this.cursors.left.isDown){	
 			this.lander.body.rotateLeft(100);
@@ -162,7 +168,6 @@ comet.prototype = {
 			this.lander.body.setZeroRotation();
 		}
 		this.accelerateToObject(this.lander,this.gravPoint,50);
-	
 		////Velocity update for HUD
 		//calculating Velocity of Lander
 		var Veloc = "Approach Speed: " + (Math.floor(Math.floor(Math.abs(this.lander.body.velocity.x) 
@@ -217,6 +222,11 @@ comet.prototype = {
 		if((absX + absY) >= 40){
 			// blow up
 			console.log("blow up");
+			this.lander.body.static = true;
+			this.lander.loadTexture("expl");
+			this.lander.animations.add("expl");
+			this.lander.play("expl", 30, true);
+			this.isNotDead = false;
 			restart = this.game.time.create(false);
 			restart.loop(Phaser.Timer.SECOND * 2.00, this.restartLevel, this);
 			restart.start();
@@ -234,6 +244,11 @@ comet.prototype = {
 			else{
 				// blow up
 				console.log("blow up");
+				this.lander.body.static = true;
+				this.lander.loadTexture("expl");
+				this.lander.animations.add("expl");
+				this.lander.play("expl", 30, true);
+				this.isNotDead = false;
 				restart = this.game.time.create(false);
 				restart.loop(Phaser.Timer.SECOND * 2.00, this.restartLevel, this);
 				restart.start();
@@ -246,6 +261,11 @@ comet.prototype = {
 	// function called when lander hits anything besides the platform
 	landerCol: function(bodyA, bodyB, shapeA, shapeB){
 		console.log("blow up");
+		this.lander.body.static = true;
+		this.lander.loadTexture("expl");
+		this.lander.animations.add("expl");
+		this.lander.play("expl", 30, true);
+		this.isNotDead = false;
 		restart = this.game.time.create(false);
 		restart.loop(Phaser.Timer.SECOND * 2.00, this.restartLevel, this);
 		restart.start();
@@ -262,7 +282,7 @@ comet.prototype = {
 
 	retMenu: function(){
 		this.music.stop();
-		this.game.state.start('mainmenu');
+		this.game.state.start('mars');
 	},
 	
 	restartLevel: function() {

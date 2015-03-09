@@ -3,6 +3,7 @@ var mars = function(game) {};
 mars.prototype = {
 
 preload: function() {
+	this.game.load.image('landerthrust', 'assets/Lander Sprites/Phil1thrust.png');
 	this.game.load.image('lander', 'assets/Lander Sprites/Phil1.png');
 	this.game.load.physics('physicsData', 'assets/PhilScale.json');
 	this.game.load.image('platform', 'assets/platform.png');
@@ -12,6 +13,7 @@ preload: function() {
 	this.game.load.audio('marsSong', 'assets/mars.ogg');
 	this.game.load.image('ast1', 'assets/ast1.png');
 	this.game.load.image('ast2', 'assets/ast2.png');
+	this.game.load.spritesheet('expl', 'assets/expl.png', 192, 192, 64);
 },
 
 create: function() {
@@ -58,7 +60,7 @@ create: function() {
 	this.game.physics.p2.enable(this.lander);
 	this.lander.body.clearShapes();
 	this.lander.body.loadPolygon('physicsData', 'PhilScale');
-
+	this.isNotDead = true;
 	// Obstacle wall using array
 	// top row
 	var obstArray = new Array();
@@ -255,8 +257,13 @@ create: function() {
 },
 
 update: function() {
-	if(this.cursors.up.isDown){
+	//added flames to thrust
+	if(this.cursors.up.isDown && this.isNotDead){
 		this.lander.body.thrust(100);
+		this.lander.loadTexture('landerthrust');
+	}
+	else if(this.cursors.up.isUp && this.isNotDead){
+		this.lander.loadTexture('lander');
 	}
 	if(this.cursors.left.isDown){
 		
@@ -325,8 +332,14 @@ landerHit: function(bodyA, bodyB, shapeA, shapeB){
 	if((absX + absY) >= 40){
 		// blow up
 		console.log("blow up");
-		this.music.stop();
-		this.game.state.start('mars');
+		this.lander.body.static = true;
+		this.lander.loadTexture("expl");
+		this.lander.animations.add("expl");
+		this.lander.play("expl", 30, true);
+		this.isNotDead = false;
+		restart = this.game.time.create(false);
+		restart.loop(Phaser.Timer.SECOND * 2.00, this.restartLevel, this);
+		restart.start();
 	}
 	else{
 		// check landing angle
@@ -340,8 +353,14 @@ landerHit: function(bodyA, bodyB, shapeA, shapeB){
 		else{
 			// blow up
 			console.log("blow up");
-			this.music.stop();
-			this.game.state.start('mars');
+			this.lander.body.static = true;
+			this.lander.loadTexture("expl");
+			this.lander.animations.add("expl");
+			this.lander.play("expl", 30, true);
+			this.isNotDead = false;
+			restart = this.game.time.create(false);
+			restart.loop(Phaser.Timer.SECOND * 2.00, this.restartLevel, this);
+			restart.start();
 		}
 	}
 	
@@ -351,8 +370,14 @@ landerHit: function(bodyA, bodyB, shapeA, shapeB){
 // function called when lander hits anything besides the platform
 landerCol: function(bodyA, bodyB, shapeA, shapeB){
 	console.log("blow up");
-	this.music.stop();
-	this.game.state.start('mars');
+		this.lander.body.static = true;
+		this.lander.loadTexture("expl");
+		this.lander.animations.add("expl");
+		this.lander.play("expl", 30, true);
+		this.isNotDead = false;
+		restart = this.game.time.create(false);
+		restart.loop(Phaser.Timer.SECOND * 2.00, this.restartLevel, this);
+		restart.start();
 },
 
 // Calls reverseVel for every obstacle that needs to move at the same time
@@ -379,6 +404,11 @@ retMenu: function(){
 	this.music.stop();
 	this.game.state.start('mainmenu');
 },
+
+restartLevel: function() {
+	this.music.stop();
+	this.game.state.start('mars');
+	},
 
 render: function() {
 	this.game.debug.bodyInfo(this.lander,32,32);
