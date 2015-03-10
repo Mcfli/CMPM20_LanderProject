@@ -160,10 +160,13 @@ comet.prototype = {
 		exitText.fill = 'red';
 		var escText = this.game.add.text(300,25,"[ESC]");
 		escText.fill = 'white';
+		var pauseText = this.game.add.text(150,-50,"PAUSED");
+		pauseText.fill = 'white';
 		this.menu.addChild(resumeText);
 		this.menu.addChild(spaceText);
 		this.menu.addChild(exitText);
 		this.menu.addChild(escText);
+		this.menu.addChild(pauseText);
 		this.menu.visible = false;
 		this.game.input.keyboard.addKey(Phaser.Keyboard.ESC).onDown.add(function() {
 			if(this.game.paused) {
