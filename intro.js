@@ -78,6 +78,18 @@ intro.prototype = {
 		
     	this.nextLine();
 		
+		this.skip = this.game.add.sprite(630,550);
+		var skipText = this.game.add.text(0,0, "Press [SPACE] to skip");
+		skipText.fontSize = 16;
+		skipText.font = "Arial";
+		skipText.stroke = '#000000';
+    	skipText.strokeThickness = 6;
+		skipText.fill = 'white';
+		this.skip.addChild(skipText);
+		this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(function() {
+			this.music.stop();
+			this.game.state.start("comet");
+		}, this);
 	},
 	
 	
