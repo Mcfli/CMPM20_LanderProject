@@ -137,7 +137,7 @@ comet.prototype = {
 		var VelText = this.game.add.text(0,0,Veloc.toString());
     
     	// HUD Sprite
-    	this.HUDlevel = this.game.add.sprite(500,0);
+    	this.HUDlevel = this.game.add.sprite(700,0);
     	this.HUDvel = this.game.add.sprite(0,50);
     
     	//Created a Sprite with fixedToCamera = true
@@ -148,6 +148,42 @@ comet.prototype = {
     
     	this.HUDlevel.addChild(levelText);
 		this.HUDvel.addChild(VelText);
+	
+		// pause menu
+		this.menu = this.game.add.sprite(200,300);
+		this.menu.fixedToCamera = true;
+		var resumeText = this.game.add.text(3,0,"Resume");
+		resumeText.fill = 'green';
+		var spaceText = this.game.add.text(0,25,"[SPACE]");
+		spaceText.fill = 'white';
+		var exitText = this.game.add.text(310,0,"Exit");
+		exitText.fill = 'red';
+		var escText = this.game.add.text(300,25,"[ESC]");
+		escText.fill = 'white';
+		this.menu.addChild(resumeText);
+		this.menu.addChild(spaceText);
+		this.menu.addChild(exitText);
+		this.menu.addChild(escText);
+		this.menu.visible = false;
+		this.game.input.keyboard.addKey(Phaser.Keyboard.ESC).onDown.add(function() {
+			if(this.game.paused) {
+				this.menu.visible = false;
+				this.game.paused = false;
+				this.music.stop();
+				this.game.state.start("mainmenu");
+			}
+			else {
+				this.game.paused = true;
+				this.menu.visible = true;
+    		}
+		}, this);
+		this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(function() {
+			if(this.game.paused) {
+				this.menu.visible = false;
+				this.game.paused = false;
+			}
+		}, this);
+
 	},
 	
 	update: function(){
