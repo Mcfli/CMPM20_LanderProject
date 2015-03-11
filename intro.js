@@ -1,6 +1,6 @@
 // Introduction cutscene for the first level
 // intro.js
-//
+
 
 var intro = function(game){};
 intro.prototype = {

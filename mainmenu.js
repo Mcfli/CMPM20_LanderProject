@@ -5,8 +5,6 @@
 var mainmenu = function(game){};
 mainmenu.prototype = {
 	
-
-
 preload: function() {
 	this.game.load.image('blankButton', 'assets/blankButton.png');
     this.game.load.image('menuBack', 'assets/planet.png');
