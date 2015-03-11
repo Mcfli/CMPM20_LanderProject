@@ -118,13 +118,13 @@ create: function() {
 	
 	var startBarrier = new Array();
 	for(var i = 0; i < 8; i++){
-		if(i == 0) startBarrier.push(this.game.add.sprite(1550, 0, 'ast1'));
+		if(i == 0) startBarrier.push(this.game.add.sprite(450, 400, 'ast1'));
 		else startBarrier.push(this.game.add.sprite(startBarrier[i - 1].x - 50, startBarrier[i - 1].y + 50, 'ast1'));
-		topWall[i].anchor.set(0.5);
-		topWall[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(topWall[i]);
-		topWall[i].body.static = true;
-		topWall[i].enableBody = true;
+		startBarrier[i].anchor.set(0.5);
+		startBarrier[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(startBarrier[i]);
+		startBarrier[i].body.static = true;
+		startBarrier[i].enableBody = true;
 	}
 	
 	
@@ -205,6 +205,10 @@ create: function() {
 	for(var i = 0; i < smallWall.length; i++){
 		smallWall[i].body.setCollisionGroup(obstacleCollisionGroup);
 		smallWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < startBarrier.length; i++){
+		startBarrier[i].body.setCollisionGroup(obstacleCollisionGroup);
+		startBarrier[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
 	for(var i = 0; i < midObstArray.length; i++){
 		midObstArray[i].body.setCollisionGroup(obstacleCollisionGroup);
