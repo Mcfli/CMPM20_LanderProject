@@ -74,7 +74,7 @@ create: function() {
 	var platformCollisionGroup = this.game.physics.p2.createCollisionGroup();
 	var obstacleCollisionGroup = this.game.physics.p2.createCollisionGroup();
 	
-	// Collidie with world bounds
+	// Collide with world bounds
 	this.game.physics.p2.updateBoundsCollisionGroup();
 	
 	// Assign collision groups
