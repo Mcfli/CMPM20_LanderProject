@@ -13,7 +13,6 @@ preload: function() {
 	this.game.load.audio('marsSong', 'assets/mars.ogg');
 	this.game.load.image('ast1', 'assets/ast1.png');
 	this.game.load.image('ast2', 'assets/ast2.png');
-	//this.game.load.spritesheet('expl', 'assets/expl.png', 192, 192, 64);
 	this.game.load.spritesheet('expl', 'assets/explode.png', 128, 128, 64);
 },
 
