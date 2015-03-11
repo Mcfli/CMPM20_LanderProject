@@ -10,9 +10,7 @@ mainmenu.prototype = {
 preload: function() {
 	this.game.load.image('blankButton', 'assets/blankButton.png');
     this.game.load.image('menuBack', 'assets/planet.png');
-    
     this.game.load.audio('clairdelune', 'assets/clairdelune.ogg');
-	
 },
 create: function() {
 //Centers the canvas	
@@ -32,6 +30,9 @@ create: function() {
     button = this.game.add.button(this.game.world.centerX, 500, 'blankButton', this.startnewgame, this);
     button.anchor.set(0.5);
     
+    howButton = this.game.add.button(this.game.world.centerX, 550, 'blankButton', this.howToPlay, this);
+    howButton.anchor.set(0.5);
+    
     
     this.text.font = 'BANGERS';
     this.text.fontSize = 40;
@@ -46,8 +47,18 @@ create: function() {
 	this.titletext.fontSize = 20;
 	this.titletext.fill = 'white';
 	
+	this.howText = 'Orbitron';
+	this.howText = this.game.add.text(this.game.world.centerX, 550, 'How To Play');
+	this.howText.anchor.set(0.5);
+	this.howText.align = 'center';
+	this.howText.fontSize = 20;
+	this.howText.fill = 'white';
+	
 	button.onInputOver.add(this.over, this);
     button.onInputOut.add(this.out, this);
+    
+    howButton.onInputOver.add(this.howOver, this);
+    howButton.onInputOut.add(this.howOut, this);
 	
 },
 
@@ -76,11 +87,24 @@ startnewgame: function(){
 	this.game.state.start("intro");
 },
 
+howToPlay: function(){
+	this.music.stop();
+	this.game.state.start("controls");
+},
+
 over: function() {
     this.titletext.fill = 'gold';
 },
 
 out: function() {
     this.titletext.fill = 'white';
+},
+
+howOver: function() {
+	this.howText.fill = 'gold';
+},
+
+howOut: function() {
+	this.howText.fill = 'white';
 }
 }
