@@ -1,16 +1,17 @@
-// mars.js
-var mars = function(game) {};
-mars.prototype = {
+//jupiter.js
+
+var jupiter = function(game) {};
+jupiter.prototype = {
 
 preload: function() {
 	this.game.load.image('landerthrust', 'assets/Lander Sprites/Phil1thrust.png');
 	this.game.load.image('lander', 'assets/Lander Sprites/Phil1.png');
 	this.game.load.physics('physicsData', 'assets/PhilScale.json');
 	this.game.load.image('platform', 'assets/platform.png');
-	this.game.load.image('planet', 'assets/mars.png');
+	this.game.load.image('planet', 'assets/jupiter2.png');
 	this.game.load.image('square', 'assets/square.png');
 	this.game.load.image('space', 'assets/backgroundTest.png');
-	this.game.load.audio('marsSong', 'assets/mars.ogg');
+	this.game.load.audio('jupiter', 'assets/jupiter.ogg');
 	this.game.load.image('ast1', 'assets/ast1.png');
 	this.game.load.image('ast2', 'assets/ast2.png');
 	this.game.load.spritesheet('expl', 'assets/expl.png', 192, 192, 64);
@@ -19,13 +20,12 @@ preload: function() {
 create: function() {
 	var planet;
 	var platform;
-	this.music = this.game.add.audio('marsSong');
+	this.music = this.game.add.audio('jupiterSong');
     this.music.play();
 
     //setting world size (larger than canvas)
     this.game.world.setBounds(0, 0, 2000, 2000);    
     
-	this.game.physics.startSystem(Phaser.Physics.ARCADE);
 	this.game.physics.startSystem(Phaser.Physics.P2JS);
 	
 	this.game.physics.p2.setImpactEvents(true);
@@ -62,116 +62,13 @@ create: function() {
 	this.lander.body.loadPolygon('physicsData', 'PhilScale');
 	this.isNotDead = true;
 	
-	// Obstacle wall using array
-	// top row
-	var obstArray = new Array();
-	for(var i = 0; i < 8; i++){
-		if(i == 0) obstArray.push(this.game.add.sprite(800, 400, 'ast1'));
-		else obstArray.push(this.game.add.sprite(obstArray[i - 1].x + 50, obstArray[0].y, 'ast1'));
-		obstArray[i].anchor.set(0.5);
-		obstArray[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(obstArray[i]);
-		obstArray[i].body.static = true;
-		obstArray[i].enableBody = true;
-	}
-	var smallWall = new Array();
-	for(var i = 0; i < 2; i++){
-		if(i == 0) smallWall.push(this.game.add.sprite(800, 450, 'ast1'));
-		else smallWall.push(this.game.add.sprite(smallWall[0].x, smallWall[i - 1].y + 50, 'ast1'));
-		smallWall[i].anchor.set(0.5);
-		smallWall[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(smallWall[i]);
-		smallWall[i].body.static = true;
-		smallWall[i].enableBody = true;
-	}
-	var midObstArray = new Array();
-	for(var i = 0; i < 5; i++){
-		if(i == 0) midObstArray.push(this.game.add.sprite(290, 1000, 'ast2'));
-		else midObstArray.push(this.game.add.sprite(midObstArray[i - 1].x + 50, midObstArray[0].y, 'ast2'));
-		midObstArray[i].anchor.set(0.5);
-		midObstArray[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(midObstArray[i]);
-		midObstArray[i].body.static = true;
-		midObstArray[i].enableBody = true;
-	}
-	var botWall = new Array();
-	for(var i = 0; i < 8; i++){
-		if(i == 0) botWall.push(this.game.add.sprite(planet.x, 1650, 'ast1'));
-		else botWall.push(this.game.add.sprite(botWall[0].x, botWall[i - 1].y + 50, 'ast1'));
-		botWall[i].anchor.set(0.5);
-		botWall[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(botWall[i]);
-		botWall[i].body.static = true;
-		botWall[i].enableBody = true;
-	}
-	var topWall = new Array();
-	for(var i = 0; i < 8; i++){
-		if(i == 0) topWall.push(this.game.add.sprite(1550, 0, 'ast2'));
-		else topWall.push(this.game.add.sprite(topWall[i - 1].x - 50, topWall[i - 1].y + 50, 'ast2'));
-		topWall[i].anchor.set(0.5);
-		topWall[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(topWall[i]);
-		topWall[i].body.static = true;
-		topWall[i].enableBody = true;
-	}
-	var lowerWall = new Array();
-	for(var i = 0; i < 8; i++){
-		if(i == 0) lowerWall.push(this.game.add.sprite(1800, 1493, 'ast1'));
-		else lowerWall.push(this.game.add.sprite(lowerWall[i - 1].x - 50, lowerWall[i - 1].y - 31, 'ast1'));
-		lowerWall[i].anchor.set(0.5);
-		lowerWall[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(lowerWall[i]);
-		lowerWall[i].body.static = true;
-		lowerWall[i].enableBody = true;
-		lowerWall[i].body.rotation = Math.atan2(this.gravPoint.y - lowerWall[i].y, this.gravPoint.x - lowerWall[i].x);
-	}
-	var sideWall = new Array();
-	for(var i = 0; i < 12; i++){
-		if(i == 0) sideWall.push(this.game.add.sprite(1650, 1200, 'ast2'));
-		else sideWall.push(this.game.add.sprite(sideWall[0].x, sideWall[i - 1].y - 50, 'ast2'));
-		sideWall[i].anchor.set(0.5);
-		sideWall[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(sideWall[i]);
-		sideWall[i].body.static = true;
-		sideWall[i].enableBody = true;
-	}
-	var sideTwo = new Array();
-	for(var i = 0; i < 3; i++){
-		if(i == 0) sideTwo.push(this.game.add.sprite(1650, 600, 'ast1'));
-		else sideTwo.push(this.game.add.sprite(sideTwo[i - 1].x + 50, sideTwo[0].y, 'ast1'));
-		sideTwo[i].anchor.set(0.5);
-		sideTwo[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(sideTwo[i]);
-		sideTwo[i].body.static = true;
-		sideTwo[i].enableBody = true;
-	}
 	
-	// Moving box
-	this.tiltBox = this.game.add.sprite(100, 1450, 'ast2');
-	this.tiltBox.anchor.set(0.5);
-	this.tiltBox.scale.setTo(0.75,0.75);
-	this.game.physics.p2.enable(this.tiltBox);
-	this.tiltBox.enableBody = true;
-	this.velocityTowards(this.tiltBox,this.gravPoint,100);
-	this.tiltBox.body.kinematic = true;
 	
-	this.tiltBoxTwo = this.game.add.sprite(this.tiltBox.x + 400,this.tiltBox.y - 200, 'ast2');
-	this.tiltBoxTwo.anchor.set(0.5);
-	this.tiltBoxTwo.scale.setTo(0.75,0.75);
-	this.game.physics.p2.enable(this.tiltBoxTwo);
-	this.tiltBoxTwo.enableBody = true;
-	this.velocityTowards(this.tiltBoxTwo,this.gravPoint,100);
-	this.reverseVel(this.tiltBoxTwo);
-	this.tiltBoxTwo.body.kinematic = true;
 	
-	// Calls for obstacles moving at the same speed, only need 1 call
-	timer = this.game.time.create(false);
-	//timer.loop(Phaser.Timer.SECOND * 2.25, this.flipVel,this);
-	timer.loop(Phaser.Timer.SECOND * 2.00, this.flipVel,this);
-	timer.start();
-	//this.game.time.events.loop(Phaser.Timer.SECOND * 2.25, callback(this.flipVel,this.tiltBox));
-
-	// Create collision groups
+	
+	
+	
+		// Create collision groups
 	var landerCollisionGroup = this.game.physics.p2.createCollisionGroup();
 	var planetCollisionGroup = this.game.physics.p2.createCollisionGroup();
 	var platformCollisionGroup = this.game.physics.p2.createCollisionGroup();
@@ -235,8 +132,8 @@ create: function() {
 	// Arrow keys
 	this.cursors = this.game.input.keyboard.createCursorKeys();
 	
-	////Functioning Code for HUD, use with Update HUD Functions
-    var level = "Mars";
+	//Functioning Code for HUD, use with Update HUD Functions
+    var level = "Jupiter";
 	var Veloc = (this.lander.body.velocity.x + this.lander.body.velocity.y)/2;
     //addChild of my text at x:0, y:0
     var levelText = this.game.add.text(0,0,level.toString());
@@ -255,7 +152,7 @@ create: function() {
     this.HUDlevel.addChild(levelText);
 	this.HUDvel.addChild(VelText);
 	
-	// pause menu
+	//Pause Menu
 	this.menu = this.game.add.sprite(200,300);
 	this.menu.fixedToCamera = true;
 	var resumeText = this.game.add.text(3,0,"Resume");
@@ -456,5 +353,5 @@ restartLevel: function() {
 
 render: function() {
 	this.game.debug.bodyInfo(this.lander,32,32);
-}
+	}
 }
