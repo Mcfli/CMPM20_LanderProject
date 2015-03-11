@@ -13,7 +13,8 @@ preload: function() {
 	this.game.load.audio('marsSong', 'assets/mars.ogg');
 	this.game.load.image('ast1', 'assets/ast1.png');
 	this.game.load.image('ast2', 'assets/ast2.png');
-	this.game.load.spritesheet('expl', 'assets/expl.png', 192, 192, 64);
+	//this.game.load.spritesheet('expl', 'assets/expl.png', 192, 192, 64);
+	this.game.load.spritesheet('expl', 'assets/explode.png', 128, 128, 64);
 },
 
 create: function() {
@@ -25,7 +26,6 @@ create: function() {
     //setting world size (larger than canvas)
     this.game.world.setBounds(0, 0, 2000, 2000);    
     
-	this.game.physics.startSystem(Phaser.Physics.ARCADE);
 	this.game.physics.startSystem(Phaser.Physics.P2JS);
 	
 	this.game.physics.p2.setImpactEvents(true);
@@ -64,8 +64,8 @@ create: function() {
 	// Obstacle wall using array
 	// top row
 	var obstArray = new Array();
-	for(var i = 0; i < 8; i++){
-		if(i == 0) obstArray.push(this.game.add.sprite(800, 400, 'ast1'));
+	for(var i = 0; i < 18; i++){
+		if(i == 0) obstArray.push(this.game.add.sprite(350, 350, 'ast1'));
 		else obstArray.push(this.game.add.sprite(obstArray[i - 1].x + 50, obstArray[0].y, 'ast1'));
 		obstArray[i].anchor.set(0.5);
 		obstArray[i].scale.setTo(0.75,0.75);

@@ -38,7 +38,7 @@ create: function() {
 	planet.anchor.set(0.5);
 	var planetW = planet.width;
 	var planetH = planet.height;
-	this.game.physics.p2.enable(planet, true);
+	this.game.physics.p2.enable(planet);
 	planet.body.static = true;
 	planet.body.setCircle(480);
 	planet.enableBody = true;
@@ -54,7 +54,7 @@ create: function() {
 	platform.enableBody = true;
 	platform.body.rotation = Math.atan2(this.gravPoint.y - platform.y, this.gravPoint.x - platform.x);
 	
-	this.lander = this.game.add.sprite(400, 400, 'lander');
+	this.lander = this.game.add.sprite(200, 200, 'lander');
 	this.lander.scale.setTo(0.5,0.5);
 	this.lander.anchor.set(0.5);
 	this.game.physics.p2.enable(this.lander);
@@ -63,7 +63,185 @@ create: function() {
 	this.isNotDead = true;
 	
 	
+	// Obstacle wall using array
+	// top row
+	var obstArray = new Array();
+	for(var i = 0; i < 10; i++){
+		if(i == 0) obstArray.push(this.game.add.sprite(450, 350, 'ast1'));
+		else obstArray.push(this.game.add.sprite(obstArray[i - 1].x + 50, obstArray[0].y, 'ast1'));
+		obstArray[i].anchor.set(0.5);
+		obstArray[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(obstArray[i]);
+		obstArray[i].body.static = true;
+		obstArray[i].enableBody = true;
+	}
+	var smallWall = new Array();
+	for(var i = 0; i < 3; i++){
+		if(i == 0) smallWall.push(this.game.add.sprite(1200, 400, 'ast1'));
+		else smallWall.push(this.game.add.sprite(smallWall[0].x, smallWall[i - 1].y + 50, 'ast1'));
+		smallWall[i].anchor.set(0.5);
+		smallWall[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(smallWall[i]);
+		smallWall[i].body.static = true;
+		smallWall[i].enableBody = true;
+	}
+	var midObstArray = new Array();
+	for(var i = 0; i < 5; i++){
+		if(i == 0) midObstArray.push(this.game.add.sprite(290, 1000, 'ast2'));
+		else midObstArray.push(this.game.add.sprite(midObstArray[i - 1].x + 50, midObstArray[0].y, 'ast2'));
+		midObstArray[i].anchor.set(0.5);
+		midObstArray[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(midObstArray[i]);
+		midObstArray[i].body.static = true;
+		midObstArray[i].enableBody = true;
+	}
+	var botWall = new Array();
+	for(var i = 0; i < 12; i++){
+		if(i == 0) botWall.push(this.game.add.sprite(350, 1050, 'ast1'));
+		else botWall.push(this.game.add.sprite(botWall[0].x, botWall[i - 1].y + 50, 'ast1'));
+		botWall[i].anchor.set(0.5);
+		botWall[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(botWall[i]);
+		botWall[i].body.static = true;
+		botWall[i].enableBody = true;
+	}
+	var topWall = new Array();
+	for(var i = 0; i < 8; i++){
+		if(i == 0) topWall.push(this.game.add.sprite(1550, 0, 'ast2'));
+		else topWall.push(this.game.add.sprite(topWall[i - 1].x - 50, topWall[i - 1].y + 50, 'ast2'));
+		topWall[i].anchor.set(0.5);
+		topWall[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(topWall[i]);
+		topWall[i].body.static = true;
+		topWall[i].enableBody = true;
+	}
 	
+	var startBarrier = new Array();
+	for(var i = 0; i < 8; i++){
+		if(i == 0) startBarrier.push(this.game.add.sprite(1550, 0, 'ast1'));
+		else startBarrier.push(this.game.add.sprite(startBarrier[i - 1].x - 50, startBarrier[i - 1].y + 50, 'ast1'));
+		topWall[i].anchor.set(0.5);
+		topWall[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(topWall[i]);
+		topWall[i].body.static = true;
+		topWall[i].enableBody = true;
+	}
+	
+	
+	var lowerWall = new Array();
+	for(var i = 0; i < 8; i++){
+		if(i == 0) lowerWall.push(this.game.add.sprite(1800, 1493, 'ast1'));
+		else lowerWall.push(this.game.add.sprite(lowerWall[i - 1].x - 50, lowerWall[i - 1].y - 31, 'ast1'));
+		lowerWall[i].anchor.set(0.5);
+		lowerWall[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(lowerWall[i]);
+		lowerWall[i].body.static = true;
+		lowerWall[i].enableBody = true;
+		lowerWall[i].body.rotation = Math.atan2(this.gravPoint.y - lowerWall[i].y, this.gravPoint.x - lowerWall[i].x);
+	}
+	var sideWall = new Array();
+	for(var i = 0; i < 12; i++){
+		if(i == 0) sideWall.push(this.game.add.sprite(1650, 1200, 'ast2'));
+		else sideWall.push(this.game.add.sprite(sideWall[0].x, sideWall[i - 1].y - 50, 'ast2'));
+		sideWall[i].anchor.set(0.5);
+		sideWall[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(sideWall[i]);
+		sideWall[i].body.static = true;
+		sideWall[i].enableBody = true;
+	}
+	var sideTwo = new Array();
+	for(var i = 0; i < 3; i++){
+		if(i == 0) sideTwo.push(this.game.add.sprite(1650, 600, 'ast1'));
+		else sideTwo.push(this.game.add.sprite(sideTwo[i - 1].x + 50, sideTwo[0].y, 'ast1'));
+		sideTwo[i].anchor.set(0.5);
+		sideTwo[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(sideTwo[i]);
+		sideTwo[i].body.static = true;
+		sideTwo[i].enableBody = true;
+	}
+	
+	// Moving box
+	this.tiltBox = this.game.add.sprite(100, 1450, 'ast2');
+	this.tiltBox.anchor.set(0.5);
+	this.tiltBox.scale.setTo(0.75,0.75);
+	this.game.physics.p2.enable(this.tiltBox);
+	this.tiltBox.enableBody = true;
+	this.velocityTowards(this.tiltBox,this.gravPoint,100);
+	this.tiltBox.body.kinematic = true;
+	
+	this.tiltBoxTwo = this.game.add.sprite(this.tiltBox.x + 400,this.tiltBox.y - 200, 'ast2');
+	this.tiltBoxTwo.anchor.set(0.5);
+	this.tiltBoxTwo.scale.setTo(0.75,0.75);
+	this.game.physics.p2.enable(this.tiltBoxTwo);
+	this.tiltBoxTwo.enableBody = true;
+	this.velocityTowards(this.tiltBoxTwo,this.gravPoint,100);
+	this.reverseVel(this.tiltBoxTwo);
+	this.tiltBoxTwo.body.kinematic = true;
+	
+	// Calls for obstacles moving at the same speed, only need 1 call
+	timer = this.game.time.create(false);
+	//timer.loop(Phaser.Timer.SECOND * 2.25, this.flipVel,this);
+	timer.loop(Phaser.Timer.SECOND * 2.00, this.flipVel,this);
+	timer.start();
+	//this.game.time.events.loop(Phaser.Timer.SECOND * 2.25, callback(this.flipVel,this.tiltBox));
+
+	// Create collision groups
+	var landerCollisionGroup = this.game.physics.p2.createCollisionGroup();
+	var planetCollisionGroup = this.game.physics.p2.createCollisionGroup();
+	var platformCollisionGroup = this.game.physics.p2.createCollisionGroup();
+	var obstacleCollisionGroup = this.game.physics.p2.createCollisionGroup();
+	
+	// Collidie with world bounds
+	this.game.physics.p2.updateBoundsCollisionGroup();
+	
+	// Assign collision groups
+	planet.body.setCollisionGroup(planetCollisionGroup);
+	platform.body.setCollisionGroup(platformCollisionGroup);
+	this.lander.body.setCollisionGroup(landerCollisionGroup);
+	for(var i = 0; i < obstArray.length; i++){
+		obstArray[i].body.setCollisionGroup(obstacleCollisionGroup);
+		obstArray[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < smallWall.length; i++){
+		smallWall[i].body.setCollisionGroup(obstacleCollisionGroup);
+		smallWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < midObstArray.length; i++){
+		midObstArray[i].body.setCollisionGroup(obstacleCollisionGroup);
+		midObstArray[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < botWall.length; i++){
+		botWall[i].body.setCollisionGroup(obstacleCollisionGroup);
+		botWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < topWall.length; i++){
+		topWall[i].body.setCollisionGroup(obstacleCollisionGroup);
+		topWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < lowerWall.length; i++){
+		lowerWall[i].body.setCollisionGroup(obstacleCollisionGroup);
+		lowerWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < sideWall.length; i++){
+		sideWall[i].body.setCollisionGroup(obstacleCollisionGroup);
+		sideWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < sideTwo.length; i++){
+		sideTwo[i].body.setCollisionGroup(obstacleCollisionGroup);
+		sideTwo[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	this.tiltBox.body.setCollisionGroup(obstacleCollisionGroup);
+	this.tiltBoxTwo.body.setCollisionGroup(obstacleCollisionGroup);
+	
+	// Object collisions
+	planet.body.collides([planetCollisionGroup,landerCollisionGroup]);
+	platform.body.collides([platformCollisionGroup,landerCollisionGroup]);
+	this.tiltBox.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	this.tiltBoxTwo.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	
+	this.lander.body.collides(platformCollisionGroup,this.landerHit,this);
+	this.lander.body.collides(obstacleCollisionGroup,this.landerCol,this);
+	this.lander.body.collides(planetCollisionGroup,this.landerCol,this);
 	
 	
 	//sets camera to follow lander sprite
@@ -73,7 +251,7 @@ create: function() {
 		this.cursors = this.game.input.keyboard.createCursorKeys();
 	
 		////Functioning Code for HUD, use with Update HUD Functions
-    	var level = "Comet";
+    	var level = "Venus";
 		var Veloc = (this.lander.body.velocity.x + this.lander.body.velocity.y)/2;
     	//addChild of my text at x:0, y:0
     	var levelText = this.game.add.text(0,0,level.toString());
