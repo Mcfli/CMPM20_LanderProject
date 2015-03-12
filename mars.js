@@ -389,7 +389,7 @@ landerHit: function(bodyA, bodyB, shapeA, shapeB){
 			this.completeLevel.fixedToCamera = true;
 			this.completeLevel.addChild(completeText);
 			menu = this.game.time.create(false);
-			menu.loop(Phaser.Timer.SECOND * 2.00, this.retMenu, this);
+			menu.loop(Phaser.Timer.SECOND * 2.00, this.nextLevel, this);
 			menu.start();
 		}
 		else{
@@ -445,6 +445,11 @@ velocityTowards: function(obj1, obj2, speed){
 retMenu: function(){
 	this.music.stop();
 	this.game.state.start('mainmenu');
+},
+
+nextLevel: function(){
+	this.music.stop();
+	this.game.state.start('venus');
 },
 
 restartLevel: function() {
