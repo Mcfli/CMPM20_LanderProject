@@ -5,6 +5,7 @@ var controls = function(game) {};
 controls.prototype = {
 	preload: function() {
 		this.game.load.image('space', 'assets/backgroundTest.png');
+		this.game.load.image('blankButton', 'assets/blankButton.png');
 		this.game.load.audio('clairdelune', 'assets/clairdelune.ogg');
 		this.game.load.image('comet', 'assets/comet.png');
 		this.game.load.image('lander', 'assets/Lander Sprites/Phil1.png');
@@ -47,6 +48,8 @@ controls.prototype = {
     	this.backText.anchor.set(0.5);
     	this.backText.align = 'center';
 		this.backText.fontSize = 20;
+		this.backText.stroke = '#000000';
+    	this.backText.strokeThickness = 6;
 		this.backText.fill = 'white';
 		
 		this.guide = this.game.add.text(200, 200, "Control");

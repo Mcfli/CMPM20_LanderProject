@@ -11,6 +11,8 @@
     <script type="text/javascript" src="mainmenu.js"></script>
     <script type="text/javascript" src="comet.js"></script>
     <script type="text/javascript" src="controls.js"></script>
+    <script type="text/javascript" src="loadLevel.js"></script>
+    <script type="text/javascript" src="venus.js"></script>
     <script type="text/javascript">
 	WebFontConfig = {
 		google: { families: [ 'BANGERS','Orbitron', 'Jura'] }
@@ -33,6 +35,8 @@
 				game.state.add("mainmenu",mainmenu);
 				game.state.add("comet", comet);
 				game.state.add("controls", controls);
+				game.state.add("loadLevel", loadLevel);
+				game.state.add("venus", venus);
 				game.state.start("mainmenu");
 			})();
 	</script>

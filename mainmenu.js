@@ -30,7 +30,10 @@ create: function() {
     button = this.game.add.button(this.game.world.centerX, 500, 'blankButton', this.startnewgame, this);
     button.anchor.set(0.5);
     
-    howButton = this.game.add.button(this.game.world.centerX, 550, 'blankButton', this.howToPlay, this);
+    selButton = this.game.add.button(this.game.world.centerX, 530, 'blankButton', this.levelSelect, this);
+    selButton.anchor.set(0.5);
+    
+    howButton = this.game.add.button(this.game.world.centerX, 560, 'blankButton', this.howToPlay, this);
     howButton.anchor.set(0.5);
     
     
@@ -47,18 +50,29 @@ create: function() {
 	this.titletext.fontSize = 20;
 	this.titletext.fill = 'white';
 	
+	this.selText = 'Orbitron';
+	this.selText = this.game.add.text(this.game.world.centerX, 530, 'Level Select');
+	this.selText.anchor.set(0.5);
+	this.selText.align = 'center';
+	this.selText.fontSize = 20;
+	this.selText.fill = 'white';
+	
 	this.howText = 'Orbitron';
-	this.howText = this.game.add.text(this.game.world.centerX, 550, 'How To Play');
+	this.howText = this.game.add.text(this.game.world.centerX, 560, 'How to Play');
 	this.howText.anchor.set(0.5);
-	this.howText.align = 'center';
 	this.howText.fontSize = 20;
+	this.howText.align = 'center';
 	this.howText.fill = 'white';
 	
 	button.onInputOver.add(this.over, this);
     button.onInputOut.add(this.out, this);
     
+    selButton.onInputOver.add(this.selOver, this);
+    selButton.onInputOut.add(this.selOut, this);
+    
     howButton.onInputOver.add(this.howOver, this);
     howButton.onInputOut.add(this.howOut, this);
+    
 	
 },
 
@@ -87,6 +101,11 @@ startnewgame: function(){
 	this.game.state.start("intro");
 },
 
+levelSelect: function(){
+	this.music.stop();
+	this.game.state.start("loadLevel");
+},
+
 howToPlay: function(){
 	this.music.stop();
 	this.game.state.start("controls");
@@ -98,6 +117,14 @@ over: function() {
 
 out: function() {
     this.titletext.fill = 'white';
+},
+
+selOver: function() {
+    this.selText.fill = 'gold';
+},
+
+selOut: function() {
+    this.selText.fill = 'white';
 },
 
 howOver: function() {
