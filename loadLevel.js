@@ -130,11 +130,11 @@ loadLevel.prototype = {
 		this.venusText.fill = 'white';
 		
 		// earth
-		//buttonSix = this.game.add.button(510, 450, 'blankButton', this.loadEarth, this);
-    	//buttonSix.anchor.set(0.5);
+		buttonSix = this.game.add.button(510, 450, 'blankButton', this.loadEarth, this);
+    	buttonSix.anchor.set(0.5);
     	
-    	//buttonSix.onInputOver.add(this.overSix, this);
-    	//buttonSix.onInputOut.add(this.outSix, this);
+    	buttonSix.onInputOver.add(this.overSix, this);
+    	buttonSix.onInputOut.add(this.outSix, this);
     	
     	this.earth = this.game.add.sprite(510,450,'earth');
     	this.earth.scale.setTo(0.1);
