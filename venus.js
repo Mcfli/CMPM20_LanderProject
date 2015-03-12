@@ -46,7 +46,7 @@ create: function() {
 	// point where gravity moves toward (center of planet)
 	this.gravPoint = new Phaser.Point(planet.x, planet.y);
 	
-	platform = this.game.add.sprite(planet.x + 360,planet.y - 310, 'platform');
+	platform = this.game.add.sprite(planet.x,planet.y + 475, 'platform');
 	platform.anchor.set(0.5);
 	platform.scale.setTo(0.75);
 	this.game.physics.p2.enable(platform);
@@ -117,7 +117,7 @@ create: function() {
 	}
 	
 	var startBarrier = new Array();
-	for(var i = 0; i < 8; i++){
+	for(var i = 0; i < 9; i++){
 		if(i == 0) startBarrier.push(this.game.add.sprite(450, 400, 'ast1'));
 		else startBarrier.push(this.game.add.sprite(startBarrier[i - 1].x - 50, startBarrier[i - 1].y + 50, 'ast1'));
 		startBarrier[i].anchor.set(0.5);
@@ -127,21 +127,31 @@ create: function() {
 		startBarrier[i].enableBody = true;
 	}
 	
+	var bottomBarrier = new Array();
+	for(var i = 0; i < 4; i++){
+		if(i == 0) bottomBarrier.push(this.game.add.sprite(planet.x, 1975, 'ast1'));
+		else bottomBarrier.push(this.game.add.sprite(bottomBarrier[i - 1].x, bottomBarrier[i - 1].y - 50, 'ast1'));
+		bottomBarrier[i].anchor.set(0.5);
+		bottomBarrier[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(bottomBarrier[i]);
+		bottomBarrier[i].body.static = true;
+		bottomBarrier[i].enableBody = true;
+	}
 	
 	var lowerWall = new Array();
-	for(var i = 0; i < 8; i++){
-		if(i == 0) lowerWall.push(this.game.add.sprite(1800, 1493, 'ast1'));
-		else lowerWall.push(this.game.add.sprite(lowerWall[i - 1].x - 50, lowerWall[i - 1].y - 31, 'ast1'));
+	for(var i = 0; i < 7; i++){
+		if(i == 0) lowerWall.push(this.game.add.sprite(1650, 1450, 'ast1'));
+		else lowerWall.push(this.game.add.sprite(lowerWall[i - 1].x - 50, lowerWall[i - 1].y + 31, 'ast1'));
 		lowerWall[i].anchor.set(0.5);
 		lowerWall[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(lowerWall[i]);
 		lowerWall[i].body.static = true;
 		lowerWall[i].enableBody = true;
-		lowerWall[i].body.rotation = Math.atan2(this.gravPoint.y - lowerWall[i].y, this.gravPoint.x - lowerWall[i].x);
+		//lowerWall[i].body.rotation = Math.atan2(this.gravPoint.y - lowerWall[i].y, this.gravPoint.x - lowerWall[i].x);
 	}
 	var sideWall = new Array();
-	for(var i = 0; i < 12; i++){
-		if(i == 0) sideWall.push(this.game.add.sprite(1650, 1200, 'ast2'));
+	for(var i = 0; i < 20; i++){
+		if(i == 0) sideWall.push(this.game.add.sprite(1650, 1400, 'ast2'));
 		else sideWall.push(this.game.add.sprite(sideWall[0].x, sideWall[i - 1].y - 50, 'ast2'));
 		sideWall[i].anchor.set(0.5);
 		sideWall[i].scale.setTo(0.75,0.75);
@@ -150,9 +160,9 @@ create: function() {
 		sideWall[i].enableBody = true;
 	}
 	var sideTwo = new Array();
-	for(var i = 0; i < 3; i++){
-		if(i == 0) sideTwo.push(this.game.add.sprite(1650, 600, 'ast1'));
-		else sideTwo.push(this.game.add.sprite(sideTwo[i - 1].x + 50, sideTwo[0].y, 'ast1'));
+	for(var i = 0; i < 20; i++){
+		if(i == 0) sideTwo.push(this.game.add.sprite(1300, 1650, 'ast2'));
+		else sideTwo.push(this.game.add.sprite(sideTwo[i - 1].x - 50, sideTwo[0].y, 'ast2'));
 		sideTwo[i].anchor.set(0.5);
 		sideTwo[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(sideTwo[i]);
@@ -160,23 +170,67 @@ create: function() {
 		sideTwo[i].enableBody = true;
 	}
 	
+	// Individual asteroids
+	
+	var indieAst1 = this.game.add.sprite(1750, 1300, 'ast1');
+	indieAst1.anchor.set(0.5);
+	indieAst1.scale.setTo(0.75,0.75);
+	this.game.physics.p2.enable(indieAst1);
+	indieAst1.body.static = true;
+	indieAst1.enableBody = true;
+	
+	var indieAst2 = this.game.add.sprite(1900, 1000, 'ast2');
+	indieAst2.anchor.set(0.5);
+	indieAst2.scale.setTo(0.75,0.75);
+	this.game.physics.p2.enable(indieAst2);
+	indieAst2.body.static = true;
+	indieAst2.enableBody = true;
+	
+	var indieAst3 = this.game.add.sprite(1800, 800, 'ast1');
+	indieAst3.anchor.set(0.5);
+	indieAst3.scale.setTo(0.75,0.75);
+	this.game.physics.p2.enable(indieAst3);
+	indieAst3.body.static = true;
+	indieAst3.enableBody = true;
+	
+	var indieAst4 = this.game.add.sprite(1750, 550, 'ast2');
+	indieAst4.anchor.set(0.5);
+	indieAst4.scale.setTo(0.75,0.75);
+	this.game.physics.p2.enable(indieAst4);
+	indieAst4.body.static = true;
+	indieAst4.enableBody = true;
+	
+	var indieAst5 = this.game.add.sprite(1950, 450, 'ast1');
+	indieAst5.anchor.set(0.5);
+	indieAst5.scale.setTo(0.75,0.75);
+	this.game.physics.p2.enable(indieAst5);
+	indieAst5.body.static = true;
+	indieAst5.enableBody = true;
+	
 	// Moving box
-	this.tiltBox = this.game.add.sprite(100, 1450, 'ast2');
+	this.tiltBox = this.game.add.sprite(100, 850, 'ast2');
 	this.tiltBox.anchor.set(0.5);
 	this.tiltBox.scale.setTo(0.75,0.75);
 	this.game.physics.p2.enable(this.tiltBox);
 	this.tiltBox.enableBody = true;
-	this.velocityTowards(this.tiltBox,this.gravPoint,100);
+	this.tiltBox.body.velocity.x = 200;
 	this.tiltBox.body.kinematic = true;
 	
-	this.tiltBoxTwo = this.game.add.sprite(this.tiltBox.x + 400,this.tiltBox.y - 200, 'ast2');
+	this.tiltBoxTwo = this.game.add.sprite(600, 650, 'ast2');
 	this.tiltBoxTwo.anchor.set(0.5);
 	this.tiltBoxTwo.scale.setTo(0.75,0.75);
 	this.game.physics.p2.enable(this.tiltBoxTwo);
 	this.tiltBoxTwo.enableBody = true;
-	this.velocityTowards(this.tiltBoxTwo,this.gravPoint,100);
-	this.reverseVel(this.tiltBoxTwo);
+	this.tiltBoxTwo.body.velocity.x = -170;
 	this.tiltBoxTwo.body.kinematic = true;
+	
+	this.tiltBox3 = this.game.add.sprite(0, 1400, 'ast2');
+	this.tiltBox3.anchor.set(0.5);
+	this.tiltBox3.scale.setTo(0.75,0.75);
+	this.game.physics.p2.enable(this.tiltBox3);
+	this.tiltBox3.enableBody = true;
+	this.tiltBox3.body.velocity.x = 150;
+	this.tiltBox3.body.kinematic = true;
 	
 	// Calls for obstacles moving at the same speed, only need 1 call
 	timer = this.game.time.create(false);
@@ -210,6 +264,10 @@ create: function() {
 		startBarrier[i].body.setCollisionGroup(obstacleCollisionGroup);
 		startBarrier[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
+	for(var i = 0; i < bottomBarrier.length; i++){
+		bottomBarrier[i].body.setCollisionGroup(obstacleCollisionGroup);
+		bottomBarrier[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
 	for(var i = 0; i < midObstArray.length; i++){
 		midObstArray[i].body.setCollisionGroup(obstacleCollisionGroup);
 		midObstArray[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
@@ -234,14 +292,32 @@ create: function() {
 		sideTwo[i].body.setCollisionGroup(obstacleCollisionGroup);
 		sideTwo[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
+	
+	indieAst1.body.setCollisionGroup(obstacleCollisionGroup);
+	indieAst1.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	
+	indieAst2.body.setCollisionGroup(obstacleCollisionGroup);
+	indieAst2.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	
+	indieAst3.body.setCollisionGroup(obstacleCollisionGroup);
+	indieAst3.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	
+	indieAst4.body.setCollisionGroup(obstacleCollisionGroup);
+	indieAst4.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	
+	indieAst5.body.setCollisionGroup(obstacleCollisionGroup);
+	indieAst5.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	
 	this.tiltBox.body.setCollisionGroup(obstacleCollisionGroup);
 	this.tiltBoxTwo.body.setCollisionGroup(obstacleCollisionGroup);
-	
+	this.tiltBox3.body.setCollisionGroup(obstacleCollisionGroup);
 	// Object collisions
 	planet.body.collides([planetCollisionGroup,landerCollisionGroup]);
 	platform.body.collides([platformCollisionGroup,landerCollisionGroup]);
 	this.tiltBox.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	this.tiltBoxTwo.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	this.tiltBox3.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	
 	
 	this.lander.body.collides(platformCollisionGroup,this.landerHit,this);
 	this.lander.body.collides(obstacleCollisionGroup,this.landerCol,this);
@@ -451,6 +527,7 @@ landerCol: function(bodyA, bodyB, shapeA, shapeB){
 flipVel: function(obj1){
 	this.reverseVel(this.tiltBox);
 	this.reverseVel(this.tiltBoxTwo);
+	this.reverseVel(this.tiltBox3);
 },
 
 // Called by timer function to reverse object's velocity
