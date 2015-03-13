@@ -70,11 +70,11 @@ loadLevel.prototype = {
 		this.cometText.fill = 'white';
 		
 		// jupiter
-		//buttonThree = this.game.add.button(400, 250, 'blankButton', this.loadJupiter, this);
-    	//buttonThree.anchor.set(0.5);
+		buttonThree = this.game.add.button(400, 250, 'blankButton', this.loadJupiter, this);
+    	buttonThree.anchor.set(0.5);
     	
-    	//buttonThree.onInputOver.add(this.overThree, this);
-    	//buttonThree.onInputOut.add(this.outThree, this);
+    	buttonThree.onInputOver.add(this.overThree, this);
+    	buttonThree.onInputOut.add(this.outThree, this);
     	
     	this.jupiter = this.game.add.sprite(400,250,'jupiter');
     	this.jupiter.scale.setTo(0.1);
@@ -130,11 +130,11 @@ loadLevel.prototype = {
 		this.venusText.fill = 'white';
 		
 		// earth
-		//buttonSix = this.game.add.button(510, 450, 'blankButton', this.loadEarth, this);
-    	//buttonSix.anchor.set(0.5);
+		buttonSix = this.game.add.button(510, 450, 'blankButton', this.loadEarth, this);
+    	buttonSix.anchor.set(0.5);
     	
-    	//buttonSix.onInputOver.add(this.overSix, this);
-    	//buttonSix.onInputOut.add(this.outSix, this);
+    	buttonSix.onInputOver.add(this.overSix, this);
+    	buttonSix.onInputOut.add(this.outSix, this);
     	
     	this.earth = this.game.add.sprite(510,450,'earth');
     	this.earth.scale.setTo(0.1);
@@ -162,22 +162,22 @@ loadLevel.prototype = {
 	
 	loadJupiter: function() {
 		this.music.stop();
-		this.game.state.start("jupiter");
+		this.game.state.start("jupiterIntro");
 	},
 	
 	loadMars: function() {
 		this.music.stop();
-		this.game.state.start("mars");
+		this.game.state.start("marsIntro");
 	},
 	
 	loadVenus: function() {
 		this.music.stop();
-		this.game.state.start("venus");
+		this.game.state.start("venusIntro");
 	},
 	
 	loadEarth: function() {
 		this.music.stop();
-		this.game.state.start("earth");
+		this.game.state.start("earthIntro");
 	},
 	
 	over: function() {

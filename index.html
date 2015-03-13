@@ -13,7 +13,12 @@
     <script type="text/javascript" src="controls.js"></script>
     <script type="text/javascript" src="loadLevel.js"></script>
     <script type="text/javascript" src="venus.js"></script>
+    <script type="text/javascript" src="jupiter.js"></script>
     <script type="text/javascript" src="about.js"></script>
+    <script type="text/javascript" src="jupiterIntro.js"></script>
+    <script type="text/javascript" src="marsIntro.js"></script>
+    <script type="text/javascript" src="venusIntro.js"></script>
+    <script type="text/javascript" src="earthIntro.js"></script>
     <script type="text/javascript">
 	WebFontConfig = {
 		google: { families: [ 'BANGERS','Orbitron', 'Jura'] }
@@ -38,7 +43,12 @@
 				game.state.add("controls", controls);
 				game.state.add("loadLevel", loadLevel);
 				game.state.add("venus", venus);
+				game.state.add("jupiter", jupiter);
 				game.state.add("about", about);
+				game.state.add("jupiterIntro", jupiterIntro);
+				game.state.add("marsIntro", marsIntro);
+				game.state.add("venusIntro", venusIntro);
+				game.state.add("earthIntro", earthIntro);
 				game.state.start("mainmenu");
 			})();
 	</script>

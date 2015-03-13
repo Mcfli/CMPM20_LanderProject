@@ -458,7 +458,7 @@ retMenu: function(){
 
 nextLevel: function(){
 	this.music.stop();
-	this.game.state.start('venus');
+	this.game.state.start('venusIntro');
 },
 
 restartLevel: function() {
