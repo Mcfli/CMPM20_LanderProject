@@ -27,14 +27,17 @@ create: function() {
     this.text.anchor.set(0.5);
     
     
-    button = this.game.add.button(this.game.world.centerX, 500, 'blankButton', this.startnewgame, this);
+    button = this.game.add.button(this.game.world.centerX, 470, 'blankButton', this.startnewgame, this);
     button.anchor.set(0.5);
     
-    selButton = this.game.add.button(this.game.world.centerX, 530, 'blankButton', this.levelSelect, this);
+    selButton = this.game.add.button(this.game.world.centerX, 500, 'blankButton', this.levelSelect, this);
     selButton.anchor.set(0.5);
     
-    howButton = this.game.add.button(this.game.world.centerX, 560, 'blankButton', this.howToPlay, this);
+    howButton = this.game.add.button(this.game.world.centerX, 530, 'blankButton', this.howToPlay, this);
     howButton.anchor.set(0.5);
+    
+    aboutButton = this.game.add.button(this.game.world.centerX, 560, 'blankButton', this.about, this);
+    aboutButton.anchor.set(0.5);
     
     
     this.text.font = 'BANGERS';
@@ -44,25 +47,32 @@ create: function() {
     this.text.setShadow(0, 0, 'rgba(0, 0, 0, 0.4)', 0);	
 
 	this.titletext = 'Orbitron';
-	this.titletext = this.game.add.text(this.game.world.centerX, 500, 'New Game');
+	this.titletext = this.game.add.text(this.game.world.centerX, 470, 'New Game');
 	this.titletext.anchor.set(0.5);
 	this.titletext.align = 'center';
 	this.titletext.fontSize = 20;
 	this.titletext.fill = 'white';
 	
 	this.selText = 'Orbitron';
-	this.selText = this.game.add.text(this.game.world.centerX, 530, 'Level Select');
+	this.selText = this.game.add.text(this.game.world.centerX, 500, 'Level Select');
 	this.selText.anchor.set(0.5);
 	this.selText.align = 'center';
 	this.selText.fontSize = 20;
 	this.selText.fill = 'white';
 	
 	this.howText = 'Orbitron';
-	this.howText = this.game.add.text(this.game.world.centerX, 560, 'How to Play');
+	this.howText = this.game.add.text(this.game.world.centerX, 530, 'How to Play');
 	this.howText.anchor.set(0.5);
 	this.howText.fontSize = 20;
 	this.howText.align = 'center';
 	this.howText.fill = 'white';
+	
+	this.aboutText = 'Orbitron';
+	this.aboutText = this.game.add.text(this.game.world.centerX, 560, 'About');
+	this.aboutText.anchor.set(0.5);
+	this.aboutText.fontSize = 20;
+	this.aboutText.align = 'center';
+	this.aboutText.fill = 'white';
 	
 	button.onInputOver.add(this.over, this);
     button.onInputOut.add(this.out, this);
@@ -73,7 +83,8 @@ create: function() {
     howButton.onInputOver.add(this.howOver, this);
     howButton.onInputOut.add(this.howOut, this);
     
-	
+	aboutButton.onInputOver.add(this.aboutOver, this);
+    aboutButton.onInputOut.add(this.aboutOut, this);
 },
 
 
@@ -111,6 +122,11 @@ howToPlay: function(){
 	this.game.state.start("controls");
 },
 
+about: function(){
+	this.music.stop();
+	this.game.state.start("about");
+},
+
 over: function() {
     this.titletext.fill = 'gold';
 },
@@ -133,5 +149,13 @@ howOver: function() {
 
 howOut: function() {
 	this.howText.fill = 'white';
+},
+
+aboutOver: function() {
+	this.aboutText.fill = 'gold';
+},
+
+aboutOut: function() {
+	this.aboutText.fill = 'white';
 }
 }
