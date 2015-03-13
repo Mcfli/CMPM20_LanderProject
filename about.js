@@ -55,7 +55,37 @@ about.prototype = {
     	this.createdText.strokeThickness = 6;
 		this.createdText.fill = 'white';
 		
+		var infoStr = "This game was created for CMPM 20 at University of California, Santa Cruz.\n" +
+		"The theme for the project was Scientific Breakthroughs of 2014. The game was\n" +
+		"inspired by the Rosetta spacecraft and Philae lander mission to land on a comet,\n" +
+		"which was succesful on November 12, 2014.  We wrote the game in Javascript\n" +
+		"and used the Phaser library for the general framework and physics of the game.\n";
+		this.infoText = 'Orbitron';
+    	this.infoText = this.game.add.text(this.game.world.centerX, 325, infoStr);
+    	this.infoText.anchor.set(0.5);
+    	this.infoText.align = 'center';
+		this.infoText.fontSize = 20;
+		this.infoText.stroke = '#000000';
+    	this.infoText.strokeThickness = 6;
+		this.infoText.fill = 'white';
 		
+		this.cutText = 'Orbitron';
+    	this.cutText = this.game.add.text(this.game.world.centerX, 450, "Cutscene image credit: NASA");
+    	this.cutText.anchor.set(0.5);
+    	this.cutText.align = 'center';
+		this.cutText.fontSize = 16;
+		this.cutText.stroke = '#000000';
+    	this.cutText.strokeThickness = 6;
+		this.cutText.fill = 'white';
+		
+		this.logoText = 'Orbitron';
+    	this.logoText = this.game.add.text(this.game.world.centerX, 475, "Team logo image credit: Stuart Keller");
+    	this.logoText.anchor.set(0.5);
+    	this.logoText.align = 'center';
+		this.logoText.fontSize = 16;
+		this.logoText.stroke = '#000000';
+    	this.logoText.strokeThickness = 6;
+		this.logoText.fill = 'white';
 	},
 	
 	retMenu: function() {
