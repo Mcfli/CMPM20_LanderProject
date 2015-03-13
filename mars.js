@@ -14,6 +14,7 @@ preload: function() {
 	this.game.load.image('ast1', 'assets/ast1.png');
 	this.game.load.image('ast2', 'assets/ast2.png');
 	this.game.load.spritesheet('expl', 'assets/explode.png', 128, 128, 64);
+	this.game.load.audio('boom', 'assets/boom.ogg');
 },
 
 create: function() {
@@ -316,7 +317,7 @@ update: function() {
 	////Velocity update for HUD
 	//calculating Velocity of Lander
 	var Veloc = "Approach Speed: " + (Math.floor(Math.floor(Math.abs(this.lander.body.velocity.x) 
-		+ Math.abs(this.lander.body.velocity.y)/2)) + " m/s");
+		+ Math.abs(this.lander.body.velocity.y))) + " m/s");
     //stringify Veloc
     var VelText = this.game.add.text(0,0,Veloc.toString());
 	//clear old sprite
@@ -329,7 +330,7 @@ update: function() {
     
     //Logic for generating HUD Warning
     if(Math.floor(Math.floor(Math.abs(this.lander.body.velocity.x) 
-		+ Math.abs(this.lander.body.velocity.y)/2)) > 40 && this.HUDwarn == null){
+		+ Math.abs(this.lander.body.velocity.y))) > 40 && this.HUDwarn == null){
 			var Warning = "UNSAFE LANDING SPEED";
 			var WarnText = this.game.add.text(0,0,Warning.toString());
 			//this.HUDwarn.destroy();
@@ -341,7 +342,7 @@ update: function() {
 	 
 	//turn off warn	
 	if(Math.floor(Math.floor(Math.abs(this.lander.body.velocity.x) 
-		+ Math.abs(this.lander.body.velocity.y)/2)) < 40 && this.HUDwarn != null){
+		+ Math.abs(this.lander.body.velocity.y))) < 40 && this.HUDwarn != null){
 			
 			this.HUDwarn.destroy();	
 			this.HUDwarn = null;
@@ -368,6 +369,8 @@ landerHit: function(bodyA, bodyB, shapeA, shapeB){
 	if((absX + absY) >= 40){
 		// blow up
 		console.log("blow up");
+		this.boom = this.game.add.audio('boom');
+    	this.boom.play();
 		this.lander.body.static = true;
 		this.lander.loadTexture("expl");
 		this.lander.animations.add("expl");
@@ -382,6 +385,8 @@ landerHit: function(bodyA, bodyB, shapeA, shapeB){
 		if(bodyA.angle <= bodyB.angle + 100 && bodyA.angle >= bodyB.angle - 100){
 			bodyA.static = true;
 			console.log("SAFE");
+			this.ding = this.game.add.audio('ding');
+    		this.ding.play();
 			var complete = "Level Complete!";
 			var completeText = this.game.add.text(0,0,complete.toString());
 			completeText.fill = 'green';
@@ -395,6 +400,8 @@ landerHit: function(bodyA, bodyB, shapeA, shapeB){
 		else{
 			// blow up
 			console.log("blow up");
+			this.boom = this.game.add.audio('boom');
+    		this.boom.play();
 			this.lander.body.static = true;
 			this.lander.loadTexture("expl");
 			this.lander.animations.add("expl");
@@ -411,7 +418,9 @@ landerHit: function(bodyA, bodyB, shapeA, shapeB){
 
 // function called when lander hits anything besides the platform
 landerCol: function(bodyA, bodyB, shapeA, shapeB){
-	console.log("blow up");
+		console.log("blow up");
+		this.boom = this.game.add.audio('boom');
+    	this.boom.play();
 		this.lander.body.static = true;
 		this.lander.loadTexture("expl");
 		this.lander.animations.add("expl");
