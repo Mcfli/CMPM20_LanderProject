@@ -23,7 +23,7 @@ create: function() {
     this.music.play();
 
     //setting world size (larger than canvas)
-    this.game.world.setBounds(0, 0, 3000, 3000);    
+    this.game.world.setBounds(0, 0, 2000, 2000);    
     
 	//this.game.physics.startSystem(Phaser.Physics.ARCADE);
 	this.game.physics.startSystem(Phaser.Physics.P2JS);
@@ -31,28 +31,28 @@ create: function() {
 	this.game.physics.p2.setImpactEvents(true);
 	this.game.physics.p2.restitution = 0.8;
 	
-	background = this.game.add.tileSprite(0,0,3000,3000, "space");
+	background = this.game.add.tileSprite(0,0,2000,2000, "space");
 	
-	planet = this.game.add.sprite(1500,1500, 'planet');
-	planet.scale.setTo(0.64);
+	planet = this.game.add.sprite(1000,1000, 'planet');
+	planet.scale.setTo(0.53);
 	planet.anchor.set(0.5);
 	var planetW = planet.width;
 	var planetH = planet.height;
 	this.game.physics.p2.enable(planet);
 	planet.body.static = true;
-	planet.body.setCircle(570);
+	planet.body.setCircle(480);
 	planet.enableBody = true;
 	
 	// point where gravity moves toward (center of planet)
 	this.gravPoint = new Phaser.Point(planet.x, planet.y);
 	
-	platform = this.game.add.sprite(planet.x,planet.y + 570, 'platform');
+	platform = this.game.add.sprite(planet.x,planet.y + 475, 'platform');
 	platform.anchor.set(0.5);
 	platform.scale.setTo(0.75);
 	this.game.physics.p2.enable(platform);
 	platform.body.static = true;
 	platform.enableBody = true;
-	platform.body.rotation = Math.atan2(platform.y - this.gravPoint.y,0);
+	platform.body.rotation = Math.atan2(this.gravPoint.y - platform.y, this.gravPoint.x - platform.x);
 	
 	this.lander = this.game.add.sprite(200, 200, 'lander');
 	this.lander.scale.setTo(0.5,0.5);
@@ -66,25 +66,17 @@ create: function() {
 	// Obstacle wall using array
 	// top row
 	var obstArray = new Array();
-	for(var i = 0; i < 10; i++){
-		if(i == 0) obstArray.push(this.game.add.sprite(450, 350, 'ast1'));
-		else obstArray.push(this.game.add.sprite(obstArray[i - 1].x + 50, obstArray[0].y, 'ast1'));
+	for(var i = 0; i < 8; i++){
+		if(i == 0) obstArray.push(this.game.add.sprite(1000, 500, 'ast1'));
+		else obstArray.push(this.game.add.sprite(obstArray[i - 1].x - 50, obstArray[i - 1].y - 50, 'ast1'));
 		obstArray[i].anchor.set(0.5);
 		obstArray[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(obstArray[i]);
 		obstArray[i].body.static = true;
 		obstArray[i].enableBody = true;
 	}
-	var smallWall = new Array();
-	for(var i = 0; i < 3; i++){
-		if(i == 0) smallWall.push(this.game.add.sprite(1200, 400, 'ast1'));
-		else smallWall.push(this.game.add.sprite(smallWall[0].x, smallWall[i - 1].y + 50, 'ast1'));
-		smallWall[i].anchor.set(0.5);
-		smallWall[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(smallWall[i]);
-		smallWall[i].body.static = true;
-		smallWall[i].enableBody = true;
-	}
+	
+
 	var midObstArray = new Array();
 	for(var i = 0; i < 5; i++){
 		if(i == 0) midObstArray.push(this.game.add.sprite(290, 1000, 'ast2'));
@@ -107,8 +99,8 @@ create: function() {
 	}
 	var topWall = new Array();
 	for(var i = 0; i < 8; i++){
-		if(i == 0) topWall.push(this.game.add.sprite(1550, 0, 'ast2'));
-		else topWall.push(this.game.add.sprite(topWall[i - 1].x - 50, topWall[i - 1].y + 50, 'ast2'));
+		if(i == 0) topWall.push(this.game.add.sprite(850, 0, 'ast2'));
+		else topWall.push(this.game.add.sprite(topWall[i - 1].x + 50, topWall[i - 1].y + 50, 'ast2'));
 		topWall[i].anchor.set(0.5);
 		topWall[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(topWall[i]);
@@ -116,15 +108,87 @@ create: function() {
 		topWall[i].enableBody = true;
 	}
 	
-	var startBarrier = new Array();
+	var topWall2 = new Array();
+	for(var i = 0; i < 8; i++){
+		if(i == 0) topWall2.push(this.game.add.sprite(1550, 0, 'ast2'));
+		else topWall2.push(this.game.add.sprite(topWall2[i - 1].x - 50, topWall2[i - 1].y + 50, 'ast2'));
+		topWall2[i].anchor.set(0.5);
+		topWall2[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(topWall2[i]);
+		topWall2[i].body.static = true;
+		topWall2[i].enableBody = true;
+	}
+	var topWall3 = new Array();
+	for(var i = 0; i < 10; i++){
+		if(i == 0) topWall3.push(this.game.add.sprite(2000, 200, 'ast2'));
+		else topWall3.push(this.game.add.sprite(topWall3[i - 1].x - 50, topWall3[i - 1].y + 50, 'ast2'));
+		topWall3[i].anchor.set(0.5);
+		topWall3[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(topWall3[i]);
+		topWall3[i].body.static = true;
+		topWall3[i].enableBody = true;
+	}
+	var topWall4 = new Array();
+	for(var i = 0; i < 10; i++){
+		if(i == 0) topWall4.push(this.game.add.sprite(2000, 800, 'ast2'));
+		else topWall4.push(this.game.add.sprite(topWall4[i - 1].x - 50, topWall4[i - 1].y + 50, 'ast2'));
+		topWall4[i].anchor.set(0.5);
+		topWall4[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(topWall4[i]);
+		topWall4[i].body.static = true;
+		topWall4[i].enableBody = true;
+	}
+	var topWall5 = new Array();
 	for(var i = 0; i < 9; i++){
-		if(i == 0) startBarrier.push(this.game.add.sprite(450, 400, 'ast1'));
-		else startBarrier.push(this.game.add.sprite(startBarrier[i - 1].x - 50, startBarrier[i - 1].y + 50, 'ast1'));
+		if(i == 0) topWall5.push(this.game.add.sprite(1900, 550, 'ast2'));
+		else topWall5.push(this.game.add.sprite(topWall5[i - 1].x - 50, topWall5[i - 1].y + 50, 'ast2'));
+		topWall5[i].anchor.set(0.5);
+		topWall5[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(topWall5[i]);
+		topWall5[i].body.static = true;
+		topWall5[i].enableBody = true;
+	}
+	//working on this
+	var topWall6 = new Array();
+	for(var i = 0; i < 9; i++){
+		if(i == 0) topWall6.push(this.game.add.sprite(1350, 1400, 'ast2'));
+		else topWall6.push(this.game.add.sprite(topWall6[i - 1].x + 50, topWall6[i - 1].y + 50, 'ast2'));
+		topWall6[i].anchor.set(0.5);
+		topWall6[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(topWall6[i]);
+		topWall6[i].body.static = true;
+		topWall6[i].enableBody = true;
+	}
+	var topWall7 = new Array();
+	for(var i = 0; i < 9; i++){
+		if(i == 0) topWall7.push(this.game.add.sprite(1250, 1600, 'ast2'));
+		else topWall7.push(this.game.add.sprite(topWall7[i - 1].x + 50, topWall7[i - 1].y + 50, 'ast2'));
+		topWall7[i].anchor.set(0.5);
+		topWall7[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(topWall7[i]);
+		topWall7[i].body.static = true;
+		topWall7[i].enableBody = true;
+	}
+	var startBarrier = new Array();
+	for(var i = 0; i < 11; i++){
+		if(i == 0) startBarrier.push(this.game.add.sprite(650, 500, 'ast1'));
+		else startBarrier.push(this.game.add.sprite(startBarrier[i - 1].x - 50, startBarrier[i - 1].y - 50, 'ast1'));
 		startBarrier[i].anchor.set(0.5);
 		startBarrier[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(startBarrier[i]);
 		startBarrier[i].body.static = true;
 		startBarrier[i].enableBody = true;
+	}
+							42
+	var startBarrier2 = new Array();
+	for(var i = 0; i < 11; i++){
+		if(i == 0) startBarrier2.push(this.game.add.sprite(550, 700, 'ast1'));
+		else startBarrier2.push(this.game.add.sprite(startBarrier2[i - 1].x - 50, startBarrier2[i - 1].y - 50, 'ast1'));
+		startBarrier2[i].anchor.set(0.5);
+		startBarrier2[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(startBarrier2[i]);
+		startBarrier2[i].body.static = true;
+		startBarrier2[i].enableBody = true;
 	}
 	
 	var bottomBarrier = new Array();
@@ -138,9 +202,9 @@ create: function() {
 		bottomBarrier[i].enableBody = true;
 	}
 	
-	var lowerWall = new Array();
-	for(var i = 0; i < 7; i++){
-		if(i == 0) lowerWall.push(this.game.add.sprite(1650, 1450, 'ast1'));
+/*	var lowerWall = new Array();
+	for(var i = 0; i < 6; i++){
+		if(i == 0) lowerWall.push(this.game.add.sprite(1700, 1500, 'ast1'));
 		else lowerWall.push(this.game.add.sprite(lowerWall[i - 1].x - 50, lowerWall[i - 1].y + 31, 'ast1'));
 		lowerWall[i].anchor.set(0.5);
 		lowerWall[i].scale.setTo(0.75,0.75);
@@ -149,17 +213,19 @@ create: function() {
 		lowerWall[i].enableBody = true;
 		//lowerWall[i].body.rotation = Math.atan2(this.gravPoint.y - lowerWall[i].y, this.gravPoint.x - lowerWall[i].x);
 	}
+*/	
+	//up to the right
 	var sideWall = new Array();
-	for(var i = 0; i < 20; i++){
-		if(i == 0) sideWall.push(this.game.add.sprite(1650, 1400, 'ast2'));
-		else sideWall.push(this.game.add.sprite(sideWall[0].x, sideWall[i - 1].y - 50, 'ast2'));
+	for(var i = 0; i < 10; i++){
+		if(i == 0) sideWall.push(this.game.add.sprite(1300, 600, 'ast2'));
+		else sideWall.push(this.game.add.sprite(sideWall[i-1].x + 50, sideWall[i - 1].y - 50, 'ast2'));
 		sideWall[i].anchor.set(0.5);
 		sideWall[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(sideWall[i]);
 		sideWall[i].body.static = true;
 		sideWall[i].enableBody = true;
 	}
-	var sideTwo = new Array();
+/*	var sideTwo = new Array();
 	for(var i = 0; i < 20; i++){
 		if(i == 0) sideTwo.push(this.game.add.sprite(1300, 1650, 'ast2'));
 		else sideTwo.push(this.game.add.sprite(sideTwo[i - 1].x - 50, sideTwo[0].y, 'ast2'));
@@ -168,11 +234,11 @@ create: function() {
 		this.game.physics.p2.enable(sideTwo[i]);
 		sideTwo[i].body.static = true;
 		sideTwo[i].enableBody = true;
-	}
+	}*/
 	
 	// Individual asteroids
 	
-	var indieAst1 = this.game.add.sprite(1750, 1300, 'ast1');
+/*	var indieAst1 = this.game.add.sprite(1750, 1300, 'ast1');
 	indieAst1.anchor.set(0.5);
 	indieAst1.scale.setTo(0.75,0.75);
 	this.game.physics.p2.enable(indieAst1);
@@ -206,7 +272,7 @@ create: function() {
 	this.game.physics.p2.enable(indieAst5);
 	indieAst5.body.static = true;
 	indieAst5.enableBody = true;
-	
+*/	
 	// Moving box
 	this.tiltBox = this.game.add.sprite(100, 850, 'ast2');
 	this.tiltBox.anchor.set(0.5);
@@ -256,13 +322,13 @@ create: function() {
 		obstArray[i].body.setCollisionGroup(obstacleCollisionGroup);
 		obstArray[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
-	for(var i = 0; i < smallWall.length; i++){
-		smallWall[i].body.setCollisionGroup(obstacleCollisionGroup);
-		smallWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
-	}
 	for(var i = 0; i < startBarrier.length; i++){
 		startBarrier[i].body.setCollisionGroup(obstacleCollisionGroup);
 		startBarrier[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < startBarrier2.length; i++){
+		startBarrier2[i].body.setCollisionGroup(obstacleCollisionGroup);
+		startBarrier2[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
 	for(var i = 0; i < bottomBarrier.length; i++){
 		bottomBarrier[i].body.setCollisionGroup(obstacleCollisionGroup);
@@ -280,20 +346,48 @@ create: function() {
 		topWall[i].body.setCollisionGroup(obstacleCollisionGroup);
 		topWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
-	for(var i = 0; i < lowerWall.length; i++){
+	for(var i = 0; i < topWall2.length; i++){
+		topWall2[i].body.setCollisionGroup(obstacleCollisionGroup);
+		topWall2[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < topWall4.length; i++){
+		topWall4[i].body.setCollisionGroup(obstacleCollisionGroup);
+		topWall4[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < topWall3.length; i++){
+		topWall3[i].body.setCollisionGroup(obstacleCollisionGroup);
+		topWall3[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < topWall4.length; i++){
+		topWall4[i].body.setCollisionGroup(obstacleCollisionGroup);
+		topWall4[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < topWall5.length; i++){
+		topWall5[i].body.setCollisionGroup(obstacleCollisionGroup);
+		topWall5[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < topWall6.length; i++){
+		topWall6[i].body.setCollisionGroup(obstacleCollisionGroup);
+		topWall6[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < topWall7.length; i++){
+		topWall7[i].body.setCollisionGroup(obstacleCollisionGroup);
+		topWall7[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+/*	for(var i = 0; i < lowerWall.length; i++){
 		lowerWall[i].body.setCollisionGroup(obstacleCollisionGroup);
 		lowerWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
-	}
+	}*/
 	for(var i = 0; i < sideWall.length; i++){
 		sideWall[i].body.setCollisionGroup(obstacleCollisionGroup);
 		sideWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
-	for(var i = 0; i < sideTwo.length; i++){
+/*	for(var i = 0; i < sideTwo.length; i++){
 		sideTwo[i].body.setCollisionGroup(obstacleCollisionGroup);
 		sideTwo[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
-	
-	indieAst1.body.setCollisionGroup(obstacleCollisionGroup);
+*/	
+/*	indieAst1.body.setCollisionGroup(obstacleCollisionGroup);
 	indieAst1.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	
 	indieAst2.body.setCollisionGroup(obstacleCollisionGroup);
@@ -307,7 +401,7 @@ create: function() {
 	
 	indieAst5.body.setCollisionGroup(obstacleCollisionGroup);
 	indieAst5.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
-	
+*/	
 	this.tiltBox.body.setCollisionGroup(obstacleCollisionGroup);
 	this.tiltBoxTwo.body.setCollisionGroup(obstacleCollisionGroup);
 	this.tiltBox3.body.setCollisionGroup(obstacleCollisionGroup);
@@ -332,7 +426,7 @@ create: function() {
 	
 		////Functioning Code for HUD, use with Update HUD Functions
     	var level = "Earth";
-		var Veloc = (this.lander.body.velocity.x + this.lander.body.velocity.y)/2;
+		var Veloc = (this.lander.body.velocity.x + this.lander.body.velocity.y);
     	//addChild of my text at x:0, y:0
     	var levelText = this.game.add.text(0,0,level.toString());
 		var VelText = this.game.add.text(0,0,Veloc.toString());
