@@ -22,6 +22,7 @@ jupiterIntro.prototype = {
 		
 		this.cutsceneArray = new Array();
 		this.cutsceneArray.push('cometCutscene');
+		this.cutsceneArray.push('cometCutscene');
 		this.cutsceneArray.push('coolJupiter');
 		this.iterator = 1;
 		
@@ -39,24 +40,18 @@ jupiterIntro.prototype = {
 
 		this.content = [
     		" ",
-   			"There was a time once",
-			"where humanity would look\n to the stars",
-			"and dared to walk amongst\n the heavens.",
-    		"",
-    		"",
-   			"With ingenuity and promise",
-			"humanity extended its reach",
-			"to other celestial objects.",
-   			"  ",
-   			"And humanity knew",
-			"that when it landed",
-			"when it set down on an\n alien surface",
-			"it meant something.",
-			" ",
-    		"Something that was lost\n to humanity",
-			"when its people dashed\n their hopes and future",
-			"forgotten, only a yearning\n for days long past",
-			"until one fateful day\n in 2014...",
+    		"November 12, 2014",
+    		"The Philae lander made history\n by being the first craft",
+    		"to land on a comet,\n67P/Churyumov–Gerasimenko.",
+
+			"But there was a problem\n with the landing.", 
+			"The Philae lost power.",
+
+			"It was assumed that\n the Philae was lost",
+			"until one day, \nthe Philae awakened.",
+
+			"Without signal from Earth,",
+			"the Philae decided\n to seek out humanity,\n and find out the truth.",
 		];
 
 		this.index = 0;
@@ -80,7 +75,7 @@ jupiterIntro.prototype = {
 		this.skip.addChild(skipText);
 		this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(function() {
 			this.music.stop();
-			this.game.state.start("comet");
+			this.game.state.start("jupiter");
 		}, this);
 	},
 	
@@ -114,12 +109,13 @@ jupiterIntro.prototype = {
 	},
 	
 	nextImage : function(){
-		if (this.iterator < 4){
+		if (this.iterator < 2){
 			this.background.loadTexture(this.cutsceneArray[this.iterator]);
 			this.iterator++;
 		}
 		else {
-			this.game.time.events.add(Phaser.Timer.SECOND * 6, this.nextLevel, this);
+			this.background.loadTexture(this.cutsceneArray[this.iterator]);
+			this.game.time.events.add(Phaser.Timer.SECOND * 16, this.nextLevel, this);
 			
 		}
 		
