@@ -7,7 +7,7 @@ preload: function() {
 	this.game.load.image('lander', 'assets/Lander Sprites/Phil1.png');
 	this.game.load.physics('physicsData', 'assets/PhilScale.json');
 	this.game.load.image('platform', 'assets/platform.png');
-	this.game.load.image('planet', 'assets/jupiter2.png');
+	this.game.load.image('planet', 'assets/jupiter3.png');
 	this.game.load.image('square', 'assets/square.png');
 	this.game.load.image('space', 'assets/backgroundTest.png');
 	this.game.load.audio('jupiterSong', 'assets/jupiter.ogg');
@@ -34,11 +34,11 @@ create: function() {
 	background = this.game.add.tileSprite(0,0,2000,2000, "space");
 	
 	planet = this.game.add.sprite(1000,1000, 'planet');
-	planet.scale.setTo(0.58);
+	planet.scale.setTo(0.55);
 	planet.anchor.set(0.5);
 	var planetW = planet.width;
 	var planetH = planet.height;
-	this.game.physics.p2.enable(planet, true);
+	this.game.physics.p2.enable(planet);
 	planet.body.static = true;
 	planet.body.setCircle(480);
 	planet.enableBody = true;
@@ -46,7 +46,7 @@ create: function() {
 	// point where gravity moves toward (center of planet)
 	this.gravPoint = new Phaser.Point(planet.x, planet.y);
 	
-	platform = this.game.add.sprite(planet.x + 360,planet.y - 310, 'platform');
+	platform = this.game.add.sprite(planet.x - 310,planet.y + 370, 'platform');
 	platform.anchor.set(0.5);
 	platform.scale.setTo(0.75);
 	this.game.physics.p2.enable(platform);
@@ -63,114 +63,77 @@ create: function() {
 	this.isNotDead = true;
 	
 	// Obstacle wall using array
-	// top row
+	//top asteroids 2
 	var obstArray = new Array();
-	for(var i = 0; i < 8; i++){
-		if(i == 0) obstArray.push(this.game.add.sprite(800, 400, 'ast1'));
-		else obstArray.push(this.game.add.sprite(obstArray[i - 1].x + 50, obstArray[0].y, 'ast1'));
+	for(var i = 0; i < 3; i++){
+		if(i == 0) obstArray.push(this.game.add.sprite(800, 200, 'ast2'));
+		else obstArray.push(this.game.add.sprite(obstArray[i - 1].x, obstArray[0].y + 200, 'ast2'));
 		obstArray[i].anchor.set(0.5);
 		obstArray[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(obstArray[i]);
 		obstArray[i].body.static = true;
 		obstArray[i].enableBody = true;
 	}
+	
+	//top asteroids 1
 	var smallWall = new Array();
-	for(var i = 0; i < 2; i++){
-		if(i == 0) smallWall.push(this.game.add.sprite(800, 450, 'ast1'));
-		else smallWall.push(this.game.add.sprite(smallWall[0].x, smallWall[i - 1].y + 50, 'ast1'));
+	for(var i = 0; i < 4; i++){
+		if(i == 0) smallWall.push(this.game.add.sprite(800, 1850, 'ast1'));
+		else smallWall.push(this.game.add.sprite(smallWall[0].x + 100, smallWall[i - 1].y, 'ast1'));
 		smallWall[i].anchor.set(0.5);
 		smallWall[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(smallWall[i]);
 		smallWall[i].body.static = true;
 		smallWall[i].enableBody = true;
 	}
+	
 	var midObstArray = new Array();
-	for(var i = 0; i < 5; i++){
-		if(i == 0) midObstArray.push(this.game.add.sprite(290, 1000, 'ast2'));
-		else midObstArray.push(this.game.add.sprite(midObstArray[i - 1].x + 50, midObstArray[0].y, 'ast2'));
+	for(var i = 0; i < 3; i++){
+		if(i == 0) midObstArray.push(this.game.add.sprite(300, 900, 'ast2'));
+		else midObstArray.push(this.game.add.sprite(midObstArray[i - 1].x + 50, midObstArray[0].y - 100, 'ast2'));
 		midObstArray[i].anchor.set(0.5);
 		midObstArray[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(midObstArray[i]);
 		midObstArray[i].body.static = true;
 		midObstArray[i].enableBody = true;
 	}
-	var botWall = new Array();
-	for(var i = 0; i < 8; i++){
-		if(i == 0) botWall.push(this.game.add.sprite(planet.x, 1650, 'ast1'));
-		else botWall.push(this.game.add.sprite(botWall[0].x, botWall[i - 1].y + 50, 'ast1'));
-		botWall[i].anchor.set(0.5);
-		botWall[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(botWall[i]);
-		botWall[i].body.static = true;
-		botWall[i].enableBody = true;
-	}
+	
+	//Asteroid at the top right to force player downwards
 	var topWall = new Array();
-	for(var i = 0; i < 8; i++){
-		if(i == 0) topWall.push(this.game.add.sprite(1550, 0, 'ast2'));
-		else topWall.push(this.game.add.sprite(topWall[i - 1].x - 50, topWall[i - 1].y + 50, 'ast2'));
+	for(var i = 0; i < 3; i++){
+		if(i == 0) topWall.push(this.game.add.sprite(1550, 400, 'ast2'));
+		else topWall.push(this.game.add.sprite(topWall[i - 1].x + 100, topWall[i - 1].y - 100, 'ast2'));
 		topWall[i].anchor.set(0.5);
 		topWall[i].scale.setTo(0.75,0.75);
 		this.game.physics.p2.enable(topWall[i]);
 		topWall[i].body.static = true;
 		topWall[i].enableBody = true;
 	}
-	var lowerWall = new Array();
-	for(var i = 0; i < 8; i++){
-		if(i == 0) lowerWall.push(this.game.add.sprite(1800, 1493, 'ast1'));
-		else lowerWall.push(this.game.add.sprite(lowerWall[i - 1].x - 50, lowerWall[i - 1].y - 31, 'ast1'));
-		lowerWall[i].anchor.set(0.5);
-		lowerWall[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(lowerWall[i]);
-		lowerWall[i].body.static = true;
-		lowerWall[i].enableBody = true;
-		lowerWall[i].body.rotation = Math.atan2(this.gravPoint.y - lowerWall[i].y, this.gravPoint.x - lowerWall[i].x);
-	}
-	var sideWall = new Array();
-	for(var i = 0; i < 12; i++){
-		if(i == 0) sideWall.push(this.game.add.sprite(1650, 1200, 'ast2'));
-		else sideWall.push(this.game.add.sprite(sideWall[0].x, sideWall[i - 1].y - 50, 'ast2'));
-		sideWall[i].anchor.set(0.5);
-		sideWall[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(sideWall[i]);
-		sideWall[i].body.static = true;
-		sideWall[i].enableBody = true;
-	}
-	var sideTwo = new Array();
-	for(var i = 0; i < 3; i++){
-		if(i == 0) sideTwo.push(this.game.add.sprite(1650, 600, 'ast1'));
-		else sideTwo.push(this.game.add.sprite(sideTwo[i - 1].x + 50, sideTwo[0].y, 'ast1'));
-		sideTwo[i].anchor.set(0.5);
-		sideTwo[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(sideTwo[i]);
-		sideTwo[i].body.static = true;
-		sideTwo[i].enableBody = true;
+	
+	//Bottom Right lower Set of Asteroids
+	var lowerAsteroid = new Array();
+	for(var i = 0; i < 5; i++){
+		if(i == 0) lowerAsteroid.push(this.game.add.sprite(1800, 1800, 'ast1'));
+		else lowerAsteroid.push(this.game.add.sprite(lowerAsteroid[i - 1].x - 100, lowerAsteroid[i - 1].y - 100, 'ast1'));
+		lowerAsteroid[i].anchor.set(0.5);
+		lowerAsteroid[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(lowerAsteroid[i]);
+		lowerAsteroid[i].body.static = true;
+		lowerAsteroid[i].enableBody = true;
 	}
 	
-	// Moving box
-	this.tiltBox = this.game.add.sprite(100, 1450, 'ast2');
-	this.tiltBox.anchor.set(0.5);
-	this.tiltBox.scale.setTo(0.75,0.75);
-	this.game.physics.p2.enable(this.tiltBox);
-	this.tiltBox.enableBody = true;
-	this.velocityTowards(this.tiltBox,this.gravPoint,100);
-	this.tiltBox.body.kinematic = true;
+	//Middle Left Set of Asteroids
+	var middleLeft = new Array();
+	for(var i = 0; i < 5; i++){
+		if(i == 0) middleLeft.push(this.game.add.sprite(200, 1000, 'ast2'));
+		else middleLeft.push(this.game.add.sprite(middleLeft[0].x + 100, middleLeft[i - 1].y + 100, 'ast2'));
+		middleLeft[i].anchor.set(0.5);
+		middleLeft[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(middleLeft[i]);
+		middleLeft[i].body.static = true;
+		middleLeft[i].enableBody = true;
+	}
 	
-	this.tiltBoxTwo = this.game.add.sprite(this.tiltBox.x + 400,this.tiltBox.y - 200, 'ast2');
-	this.tiltBoxTwo.anchor.set(0.5);
-	this.tiltBoxTwo.scale.setTo(0.75,0.75);
-	this.game.physics.p2.enable(this.tiltBoxTwo);
-	this.tiltBoxTwo.enableBody = true;
-	this.velocityTowards(this.tiltBoxTwo,this.gravPoint,100);
-	this.reverseVel(this.tiltBoxTwo);
-	this.tiltBoxTwo.body.kinematic = true;
-	
-	// Calls for obstacles moving at the same speed, only need 1 call
-	timer = this.game.time.create(false);
-	//timer.loop(Phaser.Timer.SECOND * 2.25, this.flipVel,this);
-	timer.loop(Phaser.Timer.SECOND * 2.00, this.flipVel,this);
-	timer.start();
-	//this.game.time.events.loop(Phaser.Timer.SECOND * 2.25, callback(this.flipVel,this.tiltBox));
-
 	// Create collision groups
 	var landerCollisionGroup = this.game.physics.p2.createCollisionGroup();
 	var planetCollisionGroup = this.game.physics.p2.createCollisionGroup();
@@ -179,11 +142,11 @@ create: function() {
 	
 	// Collidie with world bounds
 	this.game.physics.p2.updateBoundsCollisionGroup();
-	/*
 	// Assign collision groups
 	planet.body.setCollisionGroup(planetCollisionGroup);
 	platform.body.setCollisionGroup(platformCollisionGroup);
 	this.lander.body.setCollisionGroup(landerCollisionGroup);
+	
 	for(var i = 0; i < obstArray.length; i++){
 		obstArray[i].body.setCollisionGroup(obstacleCollisionGroup);
 		obstArray[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
@@ -196,34 +159,22 @@ create: function() {
 		midObstArray[i].body.setCollisionGroup(obstacleCollisionGroup);
 		midObstArray[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
-	for(var i = 0; i < botWall.length; i++){
-		botWall[i].body.setCollisionGroup(obstacleCollisionGroup);
-		botWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
-	}
 	for(var i = 0; i < topWall.length; i++){
 		topWall[i].body.setCollisionGroup(obstacleCollisionGroup);
 		topWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
-	for(var i = 0; i < lowerWall.length; i++){
-		lowerWall[i].body.setCollisionGroup(obstacleCollisionGroup);
-		lowerWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	for(var i = 0; i < lowerAsteroid.length; i++){
+		lowerAsteroid[i].body.setCollisionGroup(obstacleCollisionGroup);
+		lowerAsteroid[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
-	for(var i = 0; i < sideWall.length; i++){
-		sideWall[i].body.setCollisionGroup(obstacleCollisionGroup);
-		sideWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	for(var i = 0; i < middleLeft.length; i++){
+		middleLeft[i].body.setCollisionGroup(obstacleCollisionGroup);
+		middleLeft[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
-	for(var i = 0; i < sideTwo.length; i++){
-		sideTwo[i].body.setCollisionGroup(obstacleCollisionGroup);
-		sideTwo[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
-	}
-	this.tiltBox.body.setCollisionGroup(obstacleCollisionGroup);
-	this.tiltBoxTwo.body.setCollisionGroup(obstacleCollisionGroup);
-	*/
+	
 	// Object collisions
 	planet.body.collides([planetCollisionGroup,landerCollisionGroup]);
 	platform.body.collides([platformCollisionGroup,landerCollisionGroup]);
-	this.tiltBox.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
-	this.tiltBoxTwo.body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	
 	this.lander.body.collides(platformCollisionGroup,this.landerHit,this);
 	this.lander.body.collides(obstacleCollisionGroup,this.landerCol,this);
@@ -331,7 +282,7 @@ update: function() {
     
     //Logic for generating HUD Warning
     if(Math.floor(Math.floor(Math.abs(this.lander.body.velocity.x) 
-		+ Math.abs(this.lander.body.velocity.y)/2)) > 40 && this.HUDwarn == null){
+		+ Math.abs(this.lander.body.velocity.y)/2)) > 100 && this.HUDwarn == null){
 			var Warning = "UNSAFE LANDING SPEED";
 			var WarnText = this.game.add.text(0,0,Warning.toString());
 			//this.HUDwarn.destroy();
@@ -343,7 +294,7 @@ update: function() {
 	 
 	//turn off warn	
 	if(Math.floor(Math.floor(Math.abs(this.lander.body.velocity.x) 
-		+ Math.abs(this.lander.body.velocity.y)/2)) < 40 && this.HUDwarn != null){
+		+ Math.abs(this.lander.body.velocity.y)/2)) < 100 && this.HUDwarn != null){
 			
 			this.HUDwarn.destroy();	
 			this.HUDwarn = null;
@@ -422,12 +373,6 @@ landerCol: function(bodyA, bodyB, shapeA, shapeB){
 		restart = this.game.time.create(false);
 		restart.loop(Phaser.Timer.SECOND * 2.00, this.restartLevel, this);
 		restart.start();
-},
-
-// Calls reverseVel for every obstacle that needs to move at the same time
-flipVel: function(obj1){
-	this.reverseVel(this.tiltBox);
-	this.reverseVel(this.tiltBoxTwo);
 },
 
 // Called by timer function to reverse object's velocity
