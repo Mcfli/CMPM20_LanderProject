@@ -4,8 +4,8 @@ marsIntro.prototype = {
 	
 	preload: function(){
 		
-		this.game.load.image('cometCutscene', 'assets/CutsceneArt/cometCutscene.png');
-		this.game.load.image('coolJupiter', 'assets/CutsceneArt/coolJupiter.png');
+		this.game.load.image('jupiterCutscene', 'assets/CutsceneArt/jupiterCutscene.png');
+		this.game.load.image('marsCut1', 'assets/CutsceneArt/marsCut1.png');
 		
 		this.game.load.audio('marsSong', 'assets/mars.ogg');
 	},
@@ -15,14 +15,14 @@ marsIntro.prototype = {
 		this.game.scale.pageAlignVertically = true;
 		this.game.scale.refresh();
 		this.game.world.setBounds(0, 0, 800, 600); 
-		this.music = this.game.add.audio('jupiterSong');
+		this.music = this.game.add.audio('marsSong');
 		this.music.play();
-		this.background = this.game.add.sprite(0,0, "cometCutscene");
+		this.background = this.game.add.sprite(0,0, "jupiterCutscene");
 		this.game.stage.setBackgroundColor('black');
 		
 		this.cutsceneArray = new Array();
-		this.cutsceneArray.push('cometCutscene');
-		this.cutsceneArray.push('coolJupiter');
+		this.cutsceneArray.push('jupiterCutscene');
+		this.cutsceneArray.push('marsCut1');
 		this.iterator = 1;
 		
 		PIXI.Text.prototype.determineFontProperties = function(fontStyle) {
@@ -39,24 +39,13 @@ marsIntro.prototype = {
 
 		this.content = [
     		" ",
-   			"There was a time once",
-			"where humanity would look\n to the stars",
-			"and dared to walk amongst\n the heavens.",
-    		"",
-    		"",
-   			"With ingenuity and promise",
-			"humanity extended its reach",
-			"to other celestial objects.",
-   			"  ",
-   			"And humanity knew",
-			"that when it landed",
-			"when it set down on an\n alien surface",
-			"it meant something.",
-			" ",
-    		"Something that was lost\n to humanity",
-			"when its people dashed\n their hopes and future",
-			"forgotten, only a yearning\n for days long past",
-			"until one fateful day\n in 2014...",
+    		
+    		"After searching\nthe area of Jupiter,",
+    		"Philae found no sign\nof humanity.",
+
+			"Moving toward the sun,",
+			"Philae continued on to the\nnext likely place",
+			"to discover what happened\n to humanity.",
 		];
 
 		this.index = 0;
@@ -65,7 +54,7 @@ marsIntro.prototype = {
 		this.text = this.game.add.text(32, 380, '', { font: "40pt Jura", fill: 'white', stroke: 'black', strokeThickness: 2});
 		
 		timer = this.game.time.create(false);
-		timer.loop(Phaser.Timer.SECOND * 25.00, this.nextImage,this);
+		timer.loop(Phaser.Timer.SECOND * 20.00, this.nextImage,this);
 		timer.start();
 		
     	this.nextLine();
@@ -80,7 +69,7 @@ marsIntro.prototype = {
 		this.skip.addChild(skipText);
 		this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(function() {
 			this.music.stop();
-			this.game.state.start("comet");
+			this.game.state.start("mars");
 		}, this);
 	},
 	
@@ -114,19 +103,20 @@ marsIntro.prototype = {
 	},
 	
 	nextImage : function(){
-		if (this.iterator < 4){
+		if (this.iterator < 1){
 			this.background.loadTexture(this.cutsceneArray[this.iterator]);
 			this.iterator++;
 		}
 		else {
-			this.game.time.events.add(Phaser.Timer.SECOND * 6, this.nextLevel, this);
+			this.background.loadTexture(this.cutsceneArray[this.iterator]);
+			this.game.time.events.add(Phaser.Timer.SECOND * 17, this.nextLevel, this);
 			
 		}
 		
 	},
 	nextLevel : function(){
 		this.music.stop();
-		this.game.state.start('jupiter');
+		this.game.state.start('mars');
 		
 	}
 	

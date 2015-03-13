@@ -1,11 +1,11 @@
 var venusIntro = function(game){};
-venuIntro.prototype = {
+venusIntro.prototype = {
 	
 	
 	preload: function(){
 		
-		this.game.load.image('cometCutscene', 'assets/CutsceneArt/cometCutscene.png');
-		this.game.load.image('coolJupiter', 'assets/CutsceneArt/coolJupiter.png');
+		this.game.load.image('curiousity', 'assets/CutsceneArt/curiousity.png');
+		this.game.load.image('venusApproach', 'assets/CutsceneArt/venusApproach.png');
 		
 		this.game.load.audio('venusSong', 'assets/venus.ogg');
 	},
@@ -15,14 +15,14 @@ venuIntro.prototype = {
 		this.game.scale.pageAlignVertically = true;
 		this.game.scale.refresh();
 		this.game.world.setBounds(0, 0, 800, 600); 
-		this.music = this.game.add.audio('jupiterSong');
+		this.music = this.game.add.audio('venusSong');
 		this.music.play();
-		this.background = this.game.add.sprite(0,0, "cometCutscene");
+		this.background = this.game.add.sprite(0,0, "curiousity");
 		this.game.stage.setBackgroundColor('black');
 		
 		this.cutsceneArray = new Array();
-		this.cutsceneArray.push('cometCutscene');
-		this.cutsceneArray.push('coolJupiter');
+		this.cutsceneArray.push('curiousity');
+		this.cutsceneArray.push('venusApproach');
 		this.iterator = 1;
 		
 		PIXI.Text.prototype.determineFontProperties = function(fontStyle) {
@@ -38,25 +38,16 @@ venuIntro.prototype = {
 };
 
 		this.content = [
-    		" ",
-   			"There was a time once",
-			"where humanity would look\n to the stars",
-			"and dared to walk amongst\n the heavens.",
-    		"",
-    		"",
-   			"With ingenuity and promise",
-			"humanity extended its reach",
-			"to other celestial objects.",
-   			"  ",
-   			"And humanity knew",
-			"that when it landed",
-			"when it set down on an\n alien surface",
-			"it meant something.",
-			" ",
-    		"Something that was lost\n to humanity",
-			"when its people dashed\n their hopes and future",
-			"forgotten, only a yearning\n for days long past",
-			"until one fateful day\n in 2014...",
+			"",
+    		"Finally, after searching\n the red waste",
+    		"the Philae ran into\na new friend.",
+
+			"There, Curiousity told Philae",
+			"that it had lost contact \nwith Earth as well,", 
+			"and that the only way to \nfind out what happened to \nhumanity was to go to Earth.",
+
+			"However, the Philae overshot,\n and found itself orbiting \nthe planet Venus.", 
+
 		];
 
 		this.index = 0;
@@ -65,7 +56,7 @@ venuIntro.prototype = {
 		this.text = this.game.add.text(32, 380, '', { font: "40pt Jura", fill: 'white', stroke: 'black', strokeThickness: 2});
 		
 		timer = this.game.time.create(false);
-		timer.loop(Phaser.Timer.SECOND * 25.00, this.nextImage,this);
+		timer.loop(Phaser.Timer.SECOND * 40.00, this.nextImage,this);
 		timer.start();
 		
     	this.nextLine();
@@ -80,7 +71,7 @@ venuIntro.prototype = {
 		this.skip.addChild(skipText);
 		this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(function() {
 			this.music.stop();
-			this.game.state.start("comet");
+			this.game.state.start("venus");
 		}, this);
 	},
 	
@@ -114,19 +105,20 @@ venuIntro.prototype = {
 	},
 	
 	nextImage : function(){
-		if (this.iterator < 4){
+		if (this.iterator < 1){
 			this.background.loadTexture(this.cutsceneArray[this.iterator]);
 			this.iterator++;
 		}
 		else {
-			this.game.time.events.add(Phaser.Timer.SECOND * 6, this.nextLevel, this);
+			this.background.loadTexture(this.cutsceneArray[this.iterator]);
+			this.game.time.events.add(Phaser.Timer.SECOND * 10, this.nextLevel, this);
 			
 		}
 		
 	},
 	nextLevel : function(){
 		this.music.stop();
-		this.game.state.start('jupiter');
+		this.game.state.start('venus');
 		
 	}
 	
