@@ -15,6 +15,7 @@ preload: function() {
 	this.game.load.image('ast2', 'assets/ast2.png');
 	this.game.load.spritesheet('expl', 'assets/explode.png', 128, 128, 64);
 	this.game.load.audio('boom', 'assets/boom.ogg');
+	this.game.load.audio('ding', 'assets/ding.ogg');
 },
 
 create: function() {
@@ -339,6 +340,7 @@ landerHit: function(bodyA, bodyB, shapeA, shapeB){
 			bodyA.static = true;
 			console.log("SAFE");
 			this.ding = this.game.add.audio('ding');
+			this.ding.play();
 			var complete = "Level Complete!";
 			var completeText = this.game.add.text(0,0,complete.toString());
 			completeText.fill = 'green';

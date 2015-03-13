@@ -15,6 +15,7 @@ preload: function() {
 	this.game.load.image('ast2', 'assets/ast2.png');
 	this.game.load.spritesheet('expl', 'assets/explode.png', 128, 128, 64);
 	this.game.load.audio('boom', 'assets/boom.ogg');
+	this.game.load.audio('ding', 'assets/ding.ogg');
 },
 
 create: function() {
