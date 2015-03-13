@@ -77,26 +77,7 @@ create: function() {
 	}
 	
 
-	var midObstArray = new Array();
-	for(var i = 0; i < 5; i++){
-		if(i == 0) midObstArray.push(this.game.add.sprite(290, 1000, 'ast2'));
-		else midObstArray.push(this.game.add.sprite(midObstArray[i - 1].x + 50, midObstArray[0].y, 'ast2'));
-		midObstArray[i].anchor.set(0.5);
-		midObstArray[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(midObstArray[i]);
-		midObstArray[i].body.static = true;
-		midObstArray[i].enableBody = true;
-	}
-	var botWall = new Array();
-	for(var i = 0; i < 12; i++){
-		if(i == 0) botWall.push(this.game.add.sprite(350, 1050, 'ast1'));
-		else botWall.push(this.game.add.sprite(botWall[0].x, botWall[i - 1].y + 50, 'ast1'));
-		botWall[i].anchor.set(0.5);
-		botWall[i].scale.setTo(0.75,0.75);
-		this.game.physics.p2.enable(botWall[i]);
-		botWall[i].body.static = true;
-		botWall[i].enableBody = true;
-	}
+
 	var topWall = new Array();
 	for(var i = 0; i < 8; i++){
 		if(i == 0) topWall.push(this.game.add.sprite(850, 0, 'ast2'));
@@ -169,6 +150,26 @@ create: function() {
 		topWall7[i].body.static = true;
 		topWall7[i].enableBody = true;
 	}
+	var topWall8 = new Array();
+	for(var i = 0; i < 4; i++){
+		if(i == 0) topWall8.push(this.game.add.sprite(1100, 1700, 'ast2'));
+		else topWall8.push(this.game.add.sprite(topWall8[i - 1].x + 50, topWall8[i - 1].y + 50, 'ast2'));
+		topWall8[i].anchor.set(0.5);
+		topWall8[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(topWall8[i]);
+		topWall8[i].body.static = true;
+		topWall8[i].enableBody = true;
+	}
+	var topWall9 = new Array();
+	for(var i = 0; i < 4; i++){
+		if(i == 0) topWall9.push(this.game.add.sprite(1100, 1500, 'ast2'));
+		else topWall9.push(this.game.add.sprite(topWall9[i - 1].x, topWall9[i - 1].y + 50, 'ast2'));
+		topWall9[i].anchor.set(0.5);
+		topWall9[i].scale.setTo(0.75,0.75);
+		this.game.physics.p2.enable(topWall9[i]);
+		topWall9[i].body.static = true;
+		topWall9[i].enableBody = true;
+	}
 	var startBarrier = new Array();
 	for(var i = 0; i < 11; i++){
 		if(i == 0) startBarrier.push(this.game.add.sprite(650, 500, 'ast1'));
@@ -191,8 +192,8 @@ create: function() {
 	}
 	
 	var bottomBarrier = new Array();
-	for(var i = 0; i < 4; i++){
-		if(i == 0) bottomBarrier.push(this.game.add.sprite(planet.x, 1975, 'ast1'));
+	for(var i = 0; i < 10; i++){
+		if(i == 0) bottomBarrier.push(this.game.add.sprite(planet.x-100, 1975, 'ast1'));
 		else bottomBarrier.push(this.game.add.sprite(bottomBarrier[i - 1].x, bottomBarrier[i - 1].y - 50, 'ast1'));
 		bottomBarrier[i].anchor.set(0.5);
 		bottomBarrier[i].scale.setTo(0.75,0.75);
@@ -273,7 +274,7 @@ create: function() {
 	indieAst5.enableBody = true;
 */	
 	// Moving box
-	this.tiltBox = this.game.add.sprite(100, 850, 'ast2');
+	this.tiltBox = this.game.add.sprite(400, 400, 'ast2');
 	this.tiltBox.anchor.set(0.5);
 	this.tiltBox.scale.setTo(0.75,0.75);
 	this.game.physics.p2.enable(this.tiltBox);
@@ -281,7 +282,7 @@ create: function() {
 	this.tiltBox.body.velocity.x = 200;
 	this.tiltBox.body.kinematic = true;
 	
-	this.tiltBoxTwo = this.game.add.sprite(600, 650, 'ast2');
+	this.tiltBoxTwo = this.game.add.sprite(600, 200, 'ast2');
 	this.tiltBoxTwo.anchor.set(0.5);
 	this.tiltBoxTwo.scale.setTo(0.75,0.75);
 	this.game.physics.p2.enable(this.tiltBoxTwo);
@@ -289,13 +290,21 @@ create: function() {
 	this.tiltBoxTwo.body.velocity.x = -170;
 	this.tiltBoxTwo.body.kinematic = true;
 	
-	this.tiltBox3 = this.game.add.sprite(0, 1400, 'ast2');
+	this.tiltBox3 = this.game.add.sprite(900, 1700, 'ast2');
 	this.tiltBox3.anchor.set(0.5);
 	this.tiltBox3.scale.setTo(0.75,0.75);
 	this.game.physics.p2.enable(this.tiltBox3);
 	this.tiltBox3.enableBody = true;
 	this.tiltBox3.body.velocity.x = 150;
 	this.tiltBox3.body.kinematic = true;
+	
+	this.tiltBox4 = this.game.add.sprite(1400, 400, 'ast2');
+	this.tiltBox4.anchor.set(0.5);
+	this.tiltBox.scale.setTo(0.75,0.75);
+	this.game.physics.p2.enable(this.tiltBox4);
+	this.tiltBox4.enableBody = true;
+	this.tiltBox4.body.velocity.x = 150;
+	this.tiltBox4.body.kinematic = true;
 	
 	// Calls for obstacles moving at the same speed, only need 1 call
 	timer = this.game.time.create(false);
@@ -333,14 +342,7 @@ create: function() {
 		bottomBarrier[i].body.setCollisionGroup(obstacleCollisionGroup);
 		bottomBarrier[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
-	for(var i = 0; i < midObstArray.length; i++){
-		midObstArray[i].body.setCollisionGroup(obstacleCollisionGroup);
-		midObstArray[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
-	}
-	for(var i = 0; i < botWall.length; i++){
-		botWall[i].body.setCollisionGroup(obstacleCollisionGroup);
-		botWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
-	}
+
 	for(var i = 0; i < topWall.length; i++){
 		topWall[i].body.setCollisionGroup(obstacleCollisionGroup);
 		topWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
@@ -373,6 +375,17 @@ create: function() {
 		topWall7[i].body.setCollisionGroup(obstacleCollisionGroup);
 		topWall7[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
 	}
+	for(var i = 0; i < topWall8.length; i++){
+		topWall8[i].body.setCollisionGroup(obstacleCollisionGroup);
+		topWall8[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+	for(var i = 0; i < topWall9.length; i++){
+		topWall9[i].body.setCollisionGroup(obstacleCollisionGroup);
+		topWall9[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
+	}
+
+	
+	
 /*	for(var i = 0; i < lowerWall.length; i++){
 		lowerWall[i].body.setCollisionGroup(obstacleCollisionGroup);
 		lowerWall[i].body.collides([obstacleCollisionGroup, landerCollisionGroup]);
@@ -404,6 +417,7 @@ create: function() {
 	this.tiltBox.body.setCollisionGroup(obstacleCollisionGroup);
 	this.tiltBoxTwo.body.setCollisionGroup(obstacleCollisionGroup);
 	this.tiltBox3.body.setCollisionGroup(obstacleCollisionGroup);
+	this.tiltBox4.body.setCollisionGroup(obstacleCollisionGroup);
 	// Object collisions
 	planet.body.collides([planetCollisionGroup,landerCollisionGroup]);
 	platform.body.collides([platformCollisionGroup,landerCollisionGroup]);
