@@ -179,7 +179,6 @@ create: function() {
 		startBarrier[i].body.static = true;
 		startBarrier[i].enableBody = true;
 	}
-							42
 	var startBarrier2 = new Array();
 	for(var i = 0; i < 11; i++){
 		if(i == 0) startBarrier2.push(this.game.add.sprite(550, 700, 'ast1'));
