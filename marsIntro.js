@@ -1,5 +1,5 @@
-var jupiterIntro = function(game){};
-jupiterIntro.prototype = {
+var marsIntro = function(game){};
+marsIntro.prototype = {
 	
 	
 	preload: function(){
@@ -7,7 +7,7 @@ jupiterIntro.prototype = {
 		this.game.load.image('cometCutscene', 'assets/CutsceneArt/cometCutscene.png');
 		this.game.load.image('coolJupiter', 'assets/CutsceneArt/coolJupiter.png');
 		
-		this.game.load.audio('jupiterSong', 'assets/jupiter.ogg');
+		this.game.load.audio('marsSong', 'assets/mars.ogg');
 	},
 	
 	create: function() {
