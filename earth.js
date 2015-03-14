@@ -9,7 +9,7 @@ preload: function() {
 	this.game.load.image('platform', 'assets/platform.png');
 	this.game.load.image('planet', 'assets/earth1.png');
 	this.game.load.image('square', 'assets/square.png');
-	this.game.load.image('space', 'assets/backgroundTest.png');
+	this.game.load.image('space', 'assets/earthbackground.png');
 	this.game.load.audio('earthSong', 'assets/EarthMusic.ogg');
 	this.game.load.image('ast1', 'assets/ast1.png');
 	this.game.load.image('ast2', 'assets/ast2.png');

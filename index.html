@@ -6,6 +6,7 @@
         <script src="phaser.js"></script>
     </head>
     <body>
+    <script type="text/javascript" src="logo.js"></script>
 	<script type="text/javascript" src="intro.js"></script>
     <script type="text/javascript" src="mars.js"></script>
     <script type="text/javascript" src="mainmenu.js"></script>
@@ -37,6 +38,7 @@
     <script>
 		(function() {
 				var game = new Phaser.Game(800, 600, Phaser.AUTO, "game");
+				game.state.add("logo",logo);
 				game.state.add("intro",intro);
 				game.state.add("mars",mars);
 				game.state.add("mainmenu",mainmenu);
@@ -51,7 +53,7 @@
 				game.state.add("venusIntro", venusIntro);
 				game.state.add("earthIntro", earthIntro);
 				game.state.add("earth", earth);
-				game.state.start("mainmenu");
+				game.state.start("logo");
 			})();
 	</script>
     </body>
